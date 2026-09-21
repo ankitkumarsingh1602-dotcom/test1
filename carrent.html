@@ -1,0 +1,3378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RideLoop — Your Journey. Shared. Smarter.</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================
+       RIDELOOP — GLOBAL STYLES & DESIGN TOKENS
+       ============================================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    :root {
+      --bg: #fdf8f3;
+      --bg-alt: #f7efe6;
+      --card: #ffffff;
+      --card-hover: #fffaf4;
+      --text: #1f1814;
+      --text-soft: #6b5a4e;
+      --text-muted: #9c8a7c;
+      --accent: #e8722a;
+      --accent-hover: #d2611d;
+      --accent-soft: #ffe8d6;
+      --accent-soft-2: #fff4ea;
+      --border: #ece0d6;
+      --border-strong: #d9c8b8;
+      --success: #2e9e5b;
+      --success-soft: #e4f5eb;
+      --warning: #d99a1c;
+      --warning-soft: #fef5e0;
+      --danger: #d63b3b;
+      --danger-soft: #fde7e7;
+      --info: #3b7bd6;
+      --info-soft: #e7f0fd;
+      --purple: #7d4dd6;
+      --purple-soft: #f0e8fd;
+      --shadow-sm: 0 2px 8px rgba(80, 50, 30, 0.04);
+      --shadow: 0 6px 20px rgba(80, 50, 30, 0.07);
+      --shadow-lg: 0 16px 40px rgba(80, 50, 30, 0.1);
+      --shadow-xl: 0 24px 60px rgba(80, 50, 30, 0.14);
+      --radius-sm: 12px;
+      --radius: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 36px;
+      --radius-full: 100px;
+      --header-h: 72px;
+      --nav-h: 70px;
+    }
+
+    body.dark {
+      --bg: #16120f;
+      --bg-alt: #1e1915;
+      --card: #241f1a;
+      --card-hover: #2c2621;
+      --text: #f5ede4;
+      --text-soft: #c9b8a9;
+      --text-muted: #8f7d6e;
+      --accent: #ff8c42;
+      --accent-hover: #ff9f5f;
+      --accent-soft: #3a281c;
+      --accent-soft-2: #2f2218;
+      --border: #3a3129;
+      --border-strong: #4d4238;
+      --success: #4cc47c;
+      --success-soft: #1e3327;
+      --warning: #e8b23e;
+      --warning-soft: #352c14;
+      --danger: #f06060;
+      --danger-soft: #3a1e1e;
+      --info: #5a9ae8;
+      --info-soft: #1c2a3d;
+      --purple: #a07de8;
+      --purple-soft: #2a1f3d;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+      --shadow-xl: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      min-height: 100vh;
+      padding-bottom: var(--nav-h);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg-alt); }
+    ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* ============================================================
+       TYPOGRAPHY
+       ============================================================ */
+    h1 { font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+    h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+    h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+    h4 { font-size: 1.05rem; font-weight: 600; }
+    p { color: var(--text-soft); }
+
+    /* ============================================================
+       HEADER / NAVIGATION
+       ============================================================ */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 900;
+      height: var(--header-h);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .logo-mark {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--accent), #ffb347);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1.15rem;
+      box-shadow: 0 6px 16px rgba(232, 114, 42, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-mark::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.35));
+    }
+
+    .logo-text {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .logo-text span { color: var(--accent); }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+      margin-left: 1rem;
+      flex: 1;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .main-nav::-webkit-scrollbar { display: none; }
+
+    .nav-link {
+      padding: 0.55rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-soft);
+      cursor: pointer;
+      white-space: nowrap;
+      border: none;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-link i { font-size: 0.85rem; }
+
+    .nav-link:hover { background: var(--accent-soft); color: var(--accent); }
+    .nav-link.active { background: var(--accent); color: #fff; box-shadow: 0 4px 12px rgba(232, 114, 42, 0.3); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 1rem;
+      position: relative;
+    }
+
+    .icon-btn:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+
+    .icon-btn .badge-dot {
+      position: absolute;
+      top: 8px; right: 9px;
+      width: 8px; height: 8px;
+      background: var(--danger);
+      border-radius: 50%;
+      border: 2px solid var(--card);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.4rem;
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 5px 16px rgba(232, 114, 42, 0.35);
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(232, 114, 42, 0.45); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1.5px solid var(--border-strong);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft-2); }
+
+    .btn-ghost {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    .btn-ghost:hover { background: var(--accent); color: #fff; }
+
+    .btn-danger { background: var(--danger); color: #fff; box-shadow: 0 5px 16px rgba(214, 59, 59, 0.3); }
+    .btn-danger:hover { background: #b92d2d; }
+
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-success:hover { background: #25824a; }
+
+    .btn-sm { padding: 0.5rem 1rem; font-size: 0.82rem; }
+    .btn-lg { padding: 0.95rem 2rem; font-size: 1rem; }
+    .btn-block { width: 100%; }
+
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+    /* ============================================================
+       LAYOUT PRIMITIVES
+       ============================================================ */
+    .container { max-width: 1320px; margin: 0 auto; padding: 0 1.25rem; }
+    .view { display: none; animation: viewIn 0.4s ease; }
+    .view.active { display: block; }
+
+    @keyframes viewIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section { padding: 3rem 0; }
+    .section-sm { padding: 1.8rem 0; }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+      flex-wrap: wrap;
+    }
+
+    .section-head p { margin-top: 0.3rem; font-size: 0.95rem; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 0.9rem;
+    }
+
+    .grid { display: grid; gap: 1.25rem; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .grid-auto { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-lg { padding: 2rem; border-radius: var(--radius-xl); }
+    .card-hover:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+    .card-hover { transition: all 0.25s cubic-bezier(0.2, 0.9, 0.3, 1); }
+
+    .card-gradient {
+      background: linear-gradient(145deg, var(--card), var(--accent-soft-2));
+      border: 1px solid var(--border);
+    }
+
+    .flex { display: flex; }
+    .flex-between { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .flex-center { display: flex; align-items: center; justify-content: center; }
+    .flex-wrap { flex-wrap: wrap; }
+    .gap-sm { gap: 0.6rem; }
+    .gap { gap: 1rem; }
+    .gap-lg { gap: 1.5rem; }
+    .items-center { align-items: center; }
+    .items-start { align-items: flex-start; }
+    .flex-col { flex-direction: column; }
+    .flex-1 { flex: 1; }
+
+    .mt-1 { margin-top: 0.5rem; } .mt-2 { margin-top: 1rem; } .mt-3 { margin-top: 1.5rem; } .mt-4 { margin-top: 2rem; }
+    .mb-1 { margin-bottom: 0.5rem; } .mb-2 { margin-bottom: 1rem; } .mb-3 { margin-bottom: 1.5rem; } .mb-4 { margin-bottom: 2rem; }
+    .text-center { text-align: center; }
+    .text-soft { color: var(--text-soft); }
+    .text-muted { color: var(--text-muted); }
+    .text-accent { color: var(--accent); }
+    .text-success { color: var(--success); }
+    .text-danger { color: var(--danger); }
+    .text-warning { color: var(--warning); }
+    .text-sm { font-size: 0.85rem; }
+    .text-xs { font-size: 0.75rem; }
+    .text-lg { font-size: 1.15rem; }
+    .fw-600 { font-weight: 600; }
+    .fw-700 { font-weight: 700; }
+    .fw-800 { font-weight: 800; }
+
+    /* ============================================================
+       PILLS / BADGES
+       ============================================================ */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .pill-accent { background: var(--accent-soft); color: var(--accent); }
+    .pill-success { background: var(--success-soft); color: var(--success); }
+    .pill-warning { background: var(--warning-soft); color: var(--warning); }
+    .pill-danger { background: var(--danger-soft); color: var(--danger); }
+    .pill-info { background: var(--info-soft); color: var(--info); }
+    .pill-purple { background: var(--purple-soft); color: var(--purple); }
+    .pill-neutral { background: var(--bg-alt); color: var(--text-soft); border: 1px solid var(--border); }
+
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--success);
+      background: var(--success-soft);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-full);
+    }
+
+    /* ============================================================
+       FORM CONTROLS
+       ============================================================ */
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .field label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .input, .select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-weight: 500;
+      outline: none;
+    }
+
+    .input:focus, .select:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+    .input::placeholder { color: var(--text-muted); }
+
+    .select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239c8a7c' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+
+    .input-group { position: relative; }
+    .input-group i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem; pointer-events: none; }
+    .input-group .input { padding-left: 2.6rem; }
+
+    .input-error { border-color: var(--danger) !important; }
+    .error-msg { font-size: 0.75rem; color: var(--danger); font-weight: 600; display: none; }
+    .error-msg.show { display: block; }
+
+    /* ============================================================
+       SEARCH BOX (HERO)
+       ============================================================ */
+    .hero {
+      position: relative;
+      padding: 3rem 0 2rem;
+      overflow: hidden;
+    }
+
+    .hero-bg-orbs {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.5;
+    }
+
+    .orb-1 { width: 420px; height: 420px; background: radial-gradient(circle, #ffb347, transparent); top: -140px; right: -80px; }
+    .orb-2 { width: 360px; height: 360px; background: radial-gradient(circle, #e8722a, transparent); bottom: -160px; left: -100px; opacity: 0.25; }
+
+    body.dark .orb { opacity: 0.25; }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-copy h1 { margin-bottom: 1rem; }
+    .hero-copy h1 .grad {
+      background: linear-gradient(120deg, var(--accent), #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-copy > p { font-size: 1.08rem; max-width: 540px; margin-bottom: 1.6rem; }
+
+    .hero-stats { display: flex; gap: 1.8rem; flex-wrap: wrap; margin-top: 1.8rem; }
+    .hero-stat .num { font-size: 1.5rem; font-weight: 800; color: var(--text); letter-spacing: -0.03em; }
+    .hero-stat .lbl { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+
+    /* Search panel */
+    .search-panel {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 1.4rem;
+      box-shadow: var(--shadow-xl);
+      position: relative;
+    }
+
+    .search-tabs {
+      display: flex;
+      gap: 0.4rem;
+      background: var(--bg-alt);
+      border-radius: var(--radius-full);
+      padding: 0.3rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .search-tab {
+      flex: 1;
+      padding: 0.6rem 0.8rem;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-soft);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .search-tab.active { background: var(--card); color: var(--accent); box-shadow: var(--shadow-sm); }
+
+    .search-form { display: grid; gap: 0.9rem; }
+    .search-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+    .search-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.9rem; }
+
+    .route-swap {
+      position: absolute;
+      right: 1.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      border: 3px solid var(--card);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 0.8rem;
+      z-index: 2;
+      box-shadow: 0 4px 12px rgba(232, 114, 42, 0.4);
+    }
+    .route-swap:hover { background: var(--accent-hover); transform: translateY(-50%) rotate(180deg); }
+
+    .route-fields { position: relative; display: grid; gap: 0.9rem; }
+
+    .route-connector {
+      position: absolute;
+      left: 1.35rem;
+      top: 2.4rem;
+      bottom: 2.4rem;
+      width: 2px;
+      background: repeating-linear-gradient(to bottom, var(--border-strong) 0 4px, transparent 4px 8px);
+      z-index: 0;
+    }
+
+    /* Car visual */
+    .car-visual {
+      position: relative;
+      height: 240px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(160deg, var(--accent-soft), var(--accent-soft-2));
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-top: 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem;
+    }
+
+    .city-node { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; z-index: 1; }
+    .city-dot {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 3px solid var(--accent);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-size: 1.1rem;
+      box-shadow: var(--shadow);
+    }
+    .city-name { font-size: 0.78rem; font-weight: 700; color: var(--text); background: var(--card); padding: 0.2rem 0.6rem; border-radius: var(--radius-full); border: 1px solid var(--border); }
+
+    .road {
+      flex: 1;
+      height: 3px;
+      margin: 0 0.6rem;
+      background: repeating-linear-gradient(to right, var(--border-strong) 0 12px, transparent 12px 24px);
+      position: relative;
+      border-radius: 4px;
+    }
+
+    .car-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      font-size: 1.6rem;
+      color: var(--accent);
+      animation: drive 5s linear infinite;
+      filter: drop-shadow(0 4px 6px rgba(232,114,42,0.4));
+    }
+
+    @keyframes drive {
+      0% { left: -5%; }
+      100% { left: 100%; }
+    }
+
+    .float-badge {
+      position: absolute;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.5rem 0.8rem;
+      box-shadow: var(--shadow);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      z-index: 2;
+    }
+
+    .float-badge-1 { top: 1rem; right: 1rem; color: var(--success); animation: floaty 4s ease-in-out infinite; }
+    .float-badge-2 { bottom: 1rem; left: 1rem; color: var(--accent); animation: floaty 4s ease-in-out infinite 1s; }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ============================================================
+       TWO-WAY MATCHING SECTION
+       ============================================================ */
+    .matching-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .matching-card {
+      border-radius: var(--radius-xl);
+      padding: 1.8rem;
+      border: 1px solid var(--border);
+      background: var(--card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .matching-card.outbound { border-top: 4px solid var(--accent); }
+    .matching-card.return { border-top: 4px solid var(--purple); }
+
+    .matching-route {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .route-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 0.88rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+    }
+
+    .route-arrow { color: var(--text-muted); }
+
+    .matching-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-top: 1rem; }
+
+    .stat-box {
+      background: var(--bg-alt);
+      border-radius: var(--radius);
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--border);
+    }
+
+    .stat-box .val { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text); }
+    .stat-box .key { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .earnings-panel {
+      margin-top: 1.5rem;
+      background: linear-gradient(135deg, var(--accent), #ff9f5f);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .earnings-panel::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      top: -150px; right: -80px;
+    }
+
+    .earnings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .earn-item .val { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; }
+    .earn-item .key { font-size: 0.78rem; opacity: 0.9; font-weight: 600; }
+
+    .disclaimer {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: var(--bg-alt);
+      border-radius: var(--radius-sm);
+      padding: 0.6rem 0.9rem;
+      margin-top: 1rem;
+      border-left: 3px solid var(--warning);
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       RIDE RESULTS
+       ============================================================ */
+    .ride-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.4rem;
+      display: grid;
+      gap: 1.1rem;
+      transition: all 0.25s;
+    }
+
+    .ride-card:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+
+    .ride-head { display: flex; gap: 1rem; align-items: flex-start; }
+
+    .avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid var(--accent-soft);
+      flex-shrink: 0;
+    }
+
+    .avatar-lg { width: 68px; height: 68px; }
+
+    .ride-route-line {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      flex-wrap: wrap;
+    }
+
+    .ride-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.8rem;
+      padding: 1rem 0;
+      border-top: 1px dashed var(--border);
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .detail-item .k { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; }
+    .detail-item .v { font-size: 0.92rem; font-weight: 600; color: var(--text); }
+
+    .seat-dots { display: flex; gap: 0.3rem; align-items: center; }
+    .seat-dot { width: 12px; height: 12px; border-radius: 4px; background: var(--border-strong); }
+    .seat-dot.filled { background: var(--accent); }
+    .seat-dot.available { background: var(--success); }
+
+    .compat-bar {
+      height: 6px;
+      background: var(--bg-alt);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 0.4rem;
+    }
+    .compat-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--accent), #ffb347); transition: width 0.6s ease; }
+
+    /* ============================================================
+       BOOKING TIMELINE
+       ============================================================ */
+    .timeline { position: relative; padding-left: 2.2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 11px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: var(--border-strong);
+    }
+
+    .tl-item { position: relative; padding-bottom: 1.4rem; }
+    .tl-item:last-child { padding-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -2.2rem;
+      top: 0;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.65rem;
+      background: var(--bg-alt);
+      border: 2px solid var(--border-strong);
+      color: var(--text-muted);
+      z-index: 1;
+    }
+
+    .tl-item.done .tl-dot { background: var(--success); border-color: var(--success); color: #fff; }
+    .tl-item.active .tl-dot { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 0 5px var(--accent-soft); }
+    .tl-item.done .tl-title { color: var(--text); }
+    .tl-item.active .tl-title { color: var(--accent); font-weight: 700; }
+    .tl-title { font-size: 0.92rem; font-weight: 600; color: var(--text-muted); }
+    .tl-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem; }
+
+    /* ============================================================
+       MAP (SIMULATED)
+       ============================================================ */
+    .map-shell {
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #e8ecef;
+      height: 420px;
+    }
+
+    body.dark .map-shell { background: #1c2328; }
+
+    .map-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(120,140,160,0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(120,140,160,0.12) 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+
+    .map-road {
+      position: absolute;
+      height: 5px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
+    }
+
+    .map-route-line {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+
+    .map-pin {
+      position: absolute;
+      transform: translate(-50%, -100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      z-index: 4;
+    }
+
+    .map-pin i { font-size: 1.6rem; filter: drop-shadow(0 3px 5px rgba(0,0,0,0.25)); }
+    .map-pin .lbl { font-size: 0.68rem; font-weight: 700; background: var(--card); padding: 0.15rem 0.5rem; border-radius: var(--radius-full); border: 1px solid var(--border); white-space: nowrap; }
+
+    .map-car {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      font-size: 1.5rem;
+      filter: drop-shadow(0 4px 8px rgba(232,114,42,0.5));
+      animation: mapDrive 8s linear infinite;
+    }
+
+    @keyframes mapDrive {
+      0% { left: 12%; top: 78%; }
+      50% { left: 55%; top: 42%; }
+      100% { left: 88%; top: 14%; }
+    }
+
+    .map-overlay-card {
+      position: absolute;
+      left: 1rem; bottom: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      box-shadow: var(--shadow-lg);
+      z-index: 10;
+      max-width: 280px;
+    }
+
+    .map-overlay-card.top-right { left: auto; right: 1rem; top: 1rem; bottom: auto; }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .status-live { background: var(--success-soft); color: var(--success); }
+    .status-live .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); animation: blink 1.2s infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    .sim-notice {
+      background: var(--warning-soft);
+      border: 1px solid var(--warning);
+      color: var(--warning);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.5rem 0.9rem;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    /* ============================================================
+       CAR RENTAL
+       ============================================================ */
+    .category-scroll {
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scrollbar-width: none;
+    }
+    .category-scroll::-webkit-scrollbar { display: none; }
+
+    .cat-chip {
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-soft);
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .cat-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .cat-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .car-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .car-card:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+
+    .car-img {
+      height: 170px;
+      background: linear-gradient(160deg, var(--accent-soft), var(--bg-alt));
+      display: grid;
+      place-items: center;
+      font-size: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .car-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    .car-body { padding: 1.2rem; display: flex; flex-direction: column; flex: 1; }
+    .car-specs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.7rem 0; }
+    .car-spec {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-soft);
+      background: var(--bg-alt);
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+    }
+
+    /* ============================================================
+       DASHBOARD
+       ============================================================ */
+    .dash-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .dash-side {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem;
+      position: sticky;
+      top: calc(var(--header-h) + 1rem);
+    }
+
+    .dash-nav { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .dash-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.7rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-soft);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      text-align: left;
+      width: 100%;
+    }
+
+    .dash-nav-item i { width: 18px; text-align: center; color: var(--text-muted); }
+    .dash-nav-item:hover { background: var(--accent-soft); color: var(--accent); }
+    .dash-nav-item:hover i { color: var(--accent); }
+    .dash-nav-item.active { background: var(--accent); color: #fff; }
+    .dash-nav-item.active i { color: #fff; }
+
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .metric-card .metric-ico {
+      width: 38px; height: 38px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .metric-card .val { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+    .metric-card .key { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+
+    .passenger-row {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .passenger-row:last-child { border-bottom: none; }
+
+    /* ============================================================
+       SAFETY
+       ============================================================ */
+    .sos-btn {
+      background: linear-gradient(135deg, #e33, #b91c1c);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-xl);
+      padding: 1.6rem;
+      font-size: 1.3rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      box-shadow: 0 10px 30px rgba(220, 50, 50, 0.4);
+      animation: sosPulse 2s infinite;
+      width: 100%;
+      letter-spacing: -0.01em;
+    }
+
+    @keyframes sosPulse {
+      0%,100% { box-shadow: 0 10px 30px rgba(220,50,50,0.4); }
+      50% { box-shadow: 0 10px 44px rgba(220,50,50,0.7); }
+    }
+
+    .sos-btn:hover { transform: scale(1.02); }
+
+    .safety-tile {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem;
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .safety-tile:hover { border-color: var(--accent); background: var(--card-hover); transform: translateY(-2px); }
+    .safety-tile .s-ico {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       PRICING
+       ============================================================ */
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 0;
+      font-size: 0.92rem;
+      border-bottom: 1px dashed var(--border);
+    }
+    .price-row:last-child { border-bottom: none; }
+    .price-row.total { font-size: 1.15rem; font-weight: 800; color: var(--text); border-top: 2px solid var(--border-strong); margin-top: 0.4rem; padding-top: 1rem; border-bottom: none; }
+
+    .savings-banner {
+      background: var(--success-soft);
+      border: 1px solid var(--success);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    /* ============================================================
+       MOBILE BOTTOM NAV
+       ============================================================ */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: color-mix(in srgb, var(--card) 94%, transparent);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-top: 1px solid var(--border);
+      display: none;
+      z-index: 950;
+      padding: 0 0.5rem;
+    }
+
+    .bottom-nav-inner {
+      max-width: 560px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    .bnav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.4rem 0.6rem;
+      border-radius: var(--radius-sm);
+      flex: 1;
+    }
+
+    .bnav-item i { font-size: 1.15rem; }
+    .bnav-item.active { color: var(--accent); }
+    .bnav-item.active i { transform: translateY(-2px); }
+
+    /* ============================================================
+       MODAL
+       ============================================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 12, 6, 0.55);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.open { display: flex; opacity: 1; }
+
+    .modal {
+      background: var(--card);
+      border-radius: var(--radius-xl);
+      max-width: 560px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.8rem;
+      box-shadow: var(--shadow-xl);
+      border: 1px solid var(--border);
+      transform: scale(0.94) translateY(16px);
+      transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+
+    .modal-overlay.open .modal { transform: scale(1) translateY(0); }
+    .modal-lg { max-width: 720px; }
+
+    .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; }
+    .modal-close {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg-alt);
+      color: var(--text-soft);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+    }
+    .modal-close:hover { background: var(--danger-soft); color: var(--danger); border-color: var(--danger); }
+
+    /* ============================================================
+       TOAST
+       ============================================================ */
+    .toast-wrap {
+      position: fixed;
+      bottom: calc(var(--nav-h) + 1rem);
+      right: 1rem;
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.1rem;
+      box-shadow: var(--shadow-lg);
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      min-width: 250px;
+      max-width: 360px;
+      animation: toastIn 0.3s ease;
+      pointer-events: all;
+    }
+
+    .toast.success { border-left-color: var(--success); }
+    .toast.danger { border-left-color: var(--danger); }
+    .toast.info { border-left-color: var(--info); }
+
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ============================================================
+       AUTH
+       ============================================================ */
+    .auth-wrap {
+      min-height: calc(100vh - var(--header-h) - var(--nav-h));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2.2rem;
+      box-shadow: var(--shadow-xl);
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .matching-wrap { grid-template-columns: 1fr; }
+      .dash-grid { grid-template-columns: 1fr; }
+      .dash-side { position: static; }
+      .main-nav { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .bottom-nav { display: block; }
+      .search-row, .search-row-3 { grid-template-columns: 1fr; }
+      .hero { padding: 1.6rem 0 1rem; }
+      .hero-stats { gap: 1.2rem; }
+      .matching-stats { grid-template-columns: 1fr; }
+      .car-visual { height: 180px; }
+      .map-shell { height: 340px; }
+      .header-right .btn-label { display: none; }
+      .icon-btn { width: 38px; height: 38px; }
+      .section { padding: 2rem 0; }
+      .card-lg { padding: 1.4rem; }
+      .toast-wrap { left: 1rem; right: 1rem; }
+      .toast { max-width: none; }
+    }
+
+    @media (min-width: 769px) {
+      .bottom-nav { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1rem; }
+      .ride-head { flex-direction: column; }
+      .earnings-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Utility for hiding */
+    .hidden { display: none !important; }
+
+    /* Smooth number transition */
+    .count-up { transition: all 0.5s ease; }
+
+    /* Focus ring for accessibility */
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="app-header">
+  <div class="header-inner">
+    <div class="logo" onclick="RL.navigate('home')">
+      <div class="logo-mark"><i class="fas fa-route"></i></div>
+      <div class="logo-text">Ride<span>Loop</span></div>
+    </div>
+
+    <nav class="main-nav" id="mainNav">
+      <button class="nav-link active" data-view="home" onclick="RL.navigate('home')"><i class="fas fa-house"></i> Home</button>
+      <button class="nav-link" data-view="find" onclick="RL.navigate('find')"><i class="fas fa-magnifying-glass"></i> Find a Ride</button>
+      <button class="nav-link" data-view="rental" onclick="RL.navigate('rental')"><i class="fas fa-car"></i> Rent a Car</button>
+      <button class="nav-link" data-view="driver" onclick="RL.navigate('driver')"><i class="fas fa-steering-wheel"></i> Become a Driver</button>
+      <button class="nav-link" data-view="bookings" onclick="RL.navigate('bookings')"><i class="fas fa-ticket"></i> My Bookings</button>
+      <button class="nav-link" data-view="safety" onclick="RL.navigate('safety')"><i class="fas fa-shield-halved"></i> Safety</button>
+    </nav>
+
+    <div class="header-right">
+      <button class="icon-btn" id="themeToggle" title="Toggle theme" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button class="icon-btn" id="notifBtn" title="Notifications" aria-label="Notifications">
+        <i class="fas fa-bell"></i>
+        <span class="badge-dot"></span>
+      </button>
+      <button class="btn btn-primary" id="authBtn" onclick="RL.openAuth()">
+        <i class="fas fa-user"></i> <span class="btn-label">Login / Sign Up</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN VIEW CONTAINER
+     ============================================================ -->
+<main id="viewRoot">
+
+  <!-- ==========================================================
+       VIEW: HOME
+       ========================================================== -->
+  <section class="view active" id="view-home">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+      </div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><i class="fas fa-bolt"></i> Smart two-way ride matching</div>
+          <h1>Your Journey.<br><span class="grad">Shared. Smarter.</span></h1>
+          <p>Affordable long-distance shared rides. Drivers fill empty seats on both the outbound and return trip — passengers pay a fraction of a private car.</p>
+          <div class="flex gap-sm flex-wrap">
+            <button class="btn btn-primary btn-lg" onclick="RL.navigate('find')"><i class="fas fa-magnifying-glass"></i> Find a Ride</button>
+            <button class="btn btn-outline btn-lg" onclick="RL.navigate('driver')"><i class="fas fa-steering-wheel"></i> Become a Driver</button>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat"><div class="num" data-count="128">0</div><div class="lbl">Active routes</div></div>
+            <div class="hero-stat"><div class="num" data-count="8400">0</div><div class="lbl">Seats shared</div></div>
+            <div class="hero-stat"><div class="num" data-count="62">0</div><div class="lbl">Cities covered</div></div>
+          </div>
+        </div>
+
+        <!-- SEARCH PANEL -->
+        <div class="search-panel">
+          <div class="search-tabs">
+            <button class="search-tab active" data-tab="shared"><i class="fas fa-users"></i> Shared Ride</button>
+            <button class="search-tab" data-tab="rental"><i class="fas fa-car-side"></i> Rent a Car</button>
+          </div>
+
+          <form class="search-form" id="homeSearchForm" onsubmit="return RL.handleSearch(event)">
+            <div class="route-fields">
+              <div class="route-connector"></div>
+              <div class="field input-group">
+                <label for="hs-from"><i class="fas fa-circle-dot text-accent"></i> From</label>
+                <input class="input" id="hs-from" name="from" placeholder="e.g. Jamshedpur" value="Jamshedpur" required>
+              </div>
+              <div class="field input-group">
+                <label for="hs-to"><i class="fas fa-location-dot text-danger"></i> To</label>
+                <input class="input" id="hs-to" name="to" placeholder="e.g. Ranchi" value="Ranchi" required>
+              </div>
+              <button type="button" class="route-swap" title="Swap cities" onclick="RL.swapCities('hs-from','hs-to')"><i class="fas fa-arrow-right-arrow-left"></i></button>
+            </div>
+
+            <div class="search-row">
+              <div class="field">
+                <label for="hs-date"><i class="fas fa-calendar"></i> Date</label>
+                <input class="input" id="hs-date" name="date" type="date" required>
+              </div>
+              <div class="field">
+                <label for="hs-time"><i class="fas fa-clock"></i> Departure</label>
+                <input class="input" id="hs-time" name="time" type="time" value="08:00" required>
+              </div>
+            </div>
+
+            <div class="search-row">
+              <div class="field">
+                <label for="hs-pax"><i class="fas fa-user-group"></i> Passengers</label>
+                <select class="select" id="hs-pax" name="passengers">
+                  <option value="1">1 passenger</option>
+                  <option value="2" selected>2 passengers</option>
+                  <option value="3">3 passengers</option>
+                  <option value="4">4 passengers</option>
+                </select>
+              </div>
+              <div class="field" style="justify-content:flex-end;">
+                <button type="submit" class="btn btn-primary btn-block" style="height:46px;"><i class="fas fa-magnifying-glass"></i> Search Ride</button>
+              </div>
+            </div>
+          </form>
+
+          <!-- CAR VISUAL -->
+          <div class="car-visual">
+            <div class="float-badge float-badge-1"><i class="fas fa-arrow-right"></i> 200 km</div>
+            <div class="float-badge float-badge-2"><i class="fas fa-repeat"></i> Return matched</div>
+            <div class="city-node">
+              <div class="city-dot"><i class="fas fa-city"></i></div>
+              <div class="city-name">Jamshedpur</div>
+            </div>
+            <div class="road"><span class="car-icon"><i class="fas fa-car-side"></i></span></div>
+            <div class="city-node">
+              <div class="city-dot"><i class="fas fa-flag-checkered"></i></div>
+              <div class="city-name">Ranchi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TWO-WAY MATCHING -->
+    <section class="section container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow"><i class="fas fa-arrows-rotate"></i> The core idea</div>
+          <h2>Two-way matching. Zero empty seats.</h2>
+          <p>A driver going Jamshedpur → Ranchi shouldn't return empty. RideLoop finds passengers for both legs.</p>
+        </div>
+      </div>
+
+      <div class="matching-wrap">
+        <div class="matching-card outbound">
+          <div class="flex-between">
+            <span class="pill pill-accent"><i class="fas fa-arrow-right"></i> Outbound</span>
+            <span class="verified-badge"><i class="fas fa-circle-check"></i> Route active</span>
+          </div>
+          <div class="matching-route">
+            <span class="route-chip"><i class="fas fa-circle-dot text-accent"></i> Jamshedpur</span>
+            <i class="fas fa-arrow-right route-arrow"></i>
+            <span class="route-chip"><i class="fas fa-location-dot text-danger"></i> Ranchi</span>
+          </div>
+          <div class="matching-stats">
+            <div class="stat-box"><div class="val">3 <span class="text-sm text-soft">/ 4</span></div><div class="key">Passengers matched</div></div>
+            <div class="stat-box"><div class="val">200 km</div><div class="key">Trip distance</div></div>
+            <div class="stat-box"><div class="val">₹1,100</div><div class="key">Fare per seat</div></div>
+            <div class="stat-box"><div class="val text-success">₹4,400</div><div class="key">Total collected</div></div>
+          </div>
+          <div class="disclaimer"><i class="fas fa-circle-info"></i> Illustrative figures. Final fare depends on distance, tolls, vehicle type and platform fees.</div>
+        </div>
+
+        <div class="matching-card return">
+          <div class="flex-between">
+            <span class="pill pill-purple"><i class="fas fa-arrow-left"></i> Return trip</span>
+            <span class="pill pill-warning"><i class="fas fa-clock"></i> 3 requests</span>
+          </div>
+          <div class="matching-route">
+            <span class="route-chip"><i class="fas fa-circle-dot text-purple"></i> Ranchi</span>
+            <i class="fas fa-arrow-right route-arrow"></i>
+            <span class="route-chip"><i class="fas fa-location-dot text-danger"></i> Jamshedpur</span>
+          </div>
+          <div class="matching-stats">
+            <div class="stat-box"><div class="val">3</div><div class="key">Passengers waiting</div></div>
+            <div class="stat-box"><div class="val">200 km</div><div class="key">Return distance</div></div>
+            <div class="stat-box"><div class="val">₹1,200</div><div class="key">Avg. fare / seat</div></div>
+            <div class="stat-box"><div class="val text-success">₹3,600</div><div class="key">Return earnings</div></div>
+          </div>
+          <button class="btn btn-ghost btn-block mt-2" onclick="RL.navigate('find')"><i class="fas fa-people-arrows"></i> Match return passengers</button>
+        </div>
+      </div>
+
+      <!-- EARNINGS ILLUSTRATION -->
+      <div class="earnings-panel mt-3">
+        <div class="flex-between mb-2 flex-wrap gap-sm">
+          <div>
+            <div class="text-sm fw-700" style="opacity:0.9;"><i class="fas fa-calculator"></i> Driver's potential gross trip revenue</div>
+            <div class="text-xs" style="opacity:0.8;">Outbound + return, both legs matched</div>
+          </div>
+          <span class="pill" style="background:rgba(255,255,255,0.2); color:#fff;"><i class="fas fa-chart-line"></i> Illustrative only</span>
+        </div>
+        <div class="earnings-grid">
+          <div class="earn-item"><div class="val">₹4,400</div><div class="key">Outbound (4 seats)</div></div>
+          <div class="earn-item"><div class="val">₹3,600</div><div class="key">Return (3 seats)</div></div>
+          <div class="earn-item"><div class="val">₹8,000</div><div class="key">Total gross</div></div>
+          <div class="earn-item"><div class="val">₹2,400</div><div class="key">Passenger savings vs private</div></div>
+        </div>
+        <div class="disclaimer" style="background:rgba(255,255,255,0.15); color:#fff; border-left-color:#fff;"><i class="fas fa-triangle-exclamation"></i> Estimates only. Actual earnings depend on fuel, tolls, taxes, cancellations and platform fees.</div>
+      </div>
+    </section>
+
+    <!-- LIVE MAP PREVIEW -->
+    <section class="section container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow"><i class="fas fa-satellite-dish"></i> Live trip tracking</div>
+          <h2>Follow every kilometre.</h2>
+          <p>Real-time status, driver location, pickup points and ETA — structured so a real map provider can be plugged in.</p>
+        </div>
+        <button class="btn btn-outline" onclick="RL.navigate('tracking')"><i class="fas fa-expand"></i> Open full tracker</button>
+      </div>
+      <div id="homeMapContainer"></div>
+    </section>
+
+    <!-- CAR RENTAL TEASER -->
+    <section class="section container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow"><i class="fas fa-car"></i> Car rental</div>
+          <h2>Need the whole car? Rent it.</h2>
+          <p>Economy to luxury, self-drive or with a driver. Transparent pricing.</p>
+        </div>
+        <button class="btn btn-outline" onclick="RL.navigate('rental')">View all cars <i class="fas fa-arrow-right"></i></button>
+      </div>
+      <div class="grid grid-4" id="homeRentalGrid"></div>
+    </section>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: FIND A RIDE
+       ========================================================== -->
+  <section class="view" id="view-find">
+    <div class="container section">
+      <div class="eyebrow"><i class="fas fa-magnifying-glass"></i> Search</div>
+      <h1 class="mb-2">Find a shared ride</h1>
+
+      <form class="card card-lg mb-3" id="findForm" onsubmit="return RL.handleSearch(event, true)">
+        <div class="search-row">
+          <div class="field input-group">
+            <label for="f-from"><i class="fas fa-circle-dot text-accent"></i> From</label>
+            <input class="input" id="f-from" name="from" placeholder="Origin city" value="Jamshedpur" required>
+          </div>
+          <div class="field input-group">
+            <label for="f-to"><i class="fas fa-location-dot text-danger"></i> To</label>
+            <input class="input" id="f-to" name="to" placeholder="Destination city" value="Ranchi" required>
+          </div>
+        </div>
+        <div class="search-row-3 mt-2">
+          <div class="field">
+            <label for="f-date"><i class="fas fa-calendar"></i> Date</label>
+            <input class="input" id="f-date" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="f-time"><i class="fas fa-clock"></i> Time</label>
+            <input class="input" id="f-time" name="time" type="time" value="08:00" required>
+          </div>
+          <div class="field">
+            <label for="f-pax"><i class="fas fa-user-group"></i> Passengers</label>
+            <select class="select" id="f-pax" name="passengers">
+              <option value="1">1</option>
+              <option value="2" selected>2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex gap-sm mt-2 flex-wrap">
+          <button type="submit" class="btn btn-primary"><i class="fas fa-magnifying-glass"></i> Search</button>
+          <button type="button" class="btn btn-outline" onclick="RL.resetFilters()"><i class="fas fa-rotate-left"></i> Reset</button>
+        </div>
+      </form>
+
+      <div class="flex-between mb-2 flex-wrap gap-sm">
+        <h3 id="resultsTitle">Available rides</h3>
+        <div class="flex gap-sm flex-wrap">
+          <select class="select" id="sortSelect" style="width:auto;" onchange="RL.applySort()">
+            <option value="match">Best match</option>
+            <option value="price">Lowest price</option>
+            <option value="rating">Highest rating</option>
+            <option value="depart">Earliest departure</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid" id="rideResults"></div>
+
+      <!-- RETURN MATCHING CARD -->
+      <div class="card card-lg mt-3 card-gradient" id="returnMatchCard">
+        <div class="flex-between flex-wrap gap-sm mb-2">
+          <div>
+            <span class="pill pill-purple"><i class="fas fa-arrows-rotate"></i> Return journey matching</span>
+            <h3 class="mt-1">Help your driver find passengers for the return trip</h3>
+            <p class="text-sm">Passengers heading back along your route. Add them to increase driver earnings and reduce your effective fare.</p>
+          </div>
+        </div>
+        <div class="grid grid-3" id="returnPassengers"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: RIDE DETAILS
+       ========================================================== -->
+  <section class="view" id="view-details">
+    <div class="container section">
+      <button class="btn btn-outline btn-sm mb-2" onclick="RL.navigate('find')"><i class="fas fa-arrow-left"></i> Back to results</button>
+      <div id="rideDetailsBody"></div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: BOOKINGS
+       ========================================================== -->
+  <section class="view" id="view-bookings">
+    <div class="container section">
+      <div class="eyebrow"><i class="fas fa-ticket"></i> My bookings</div>
+      <h1 class="mb-3">Your trips</h1>
+      <div class="grid grid-2" id="bookingsGrid"></div>
+
+      <div class="card card-lg mt-4">
+        <h3 class="mb-2"><i class="fas fa-list-check text-accent"></i> Booking status timeline</h3>
+        <p class="text-sm mb-3">Booking <strong>#RL28491</strong> · Jamshedpur → Ranchi · 21 Sep, 8:00 AM</p>
+        <div class="timeline" id="bookingTimeline"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: TRACKING
+       ========================================================== -->
+  <section class="view" id="view-tracking">
+    <div class="container section">
+      <div class="eyebrow"><i class="fas fa-satellite-dish"></i> Live trip</div>
+      <h1 class="mb-2">Track your ride</h1>
+
+      <div class="grid" style="grid-template-columns: 1fr; gap: 1.5rem;">
+        <div id="trackingMapContainer"></div>
+
+        <div class="grid grid-3">
+          <div class="metric-card">
+            <div class="metric-ico" style="background:var(--accent-soft); color:var(--accent);"><i class="fas fa-road"></i></div>
+            <div class="val" id="trackDistance">140 km</div>
+            <div class="key">Distance remaining</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-ico" style="background:var(--info-soft); color:var(--info);"><i class="fas fa-clock"></i></div>
+            <div class="val" id="trackEta">2h 10m</div>
+            <div class="key">Estimated arrival</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-ico" style="background:var(--success-soft); color:var(--success);"><i class="fas fa-gauge-high"></i></div>
+            <div class="val" id="trackSpeed">62 km/h</div>
+            <div class="key">Average speed</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="mb-2">Trip status</h3>
+          <div class="flex gap-sm flex-wrap">
+            <button class="btn btn-outline btn-sm" onclick="RL.setTripStatus('onway', this)"><span class="pill pill-success"><span class="dot"></span></span> Driver on the way</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.setTripStatus('arriving', this)"><span class="pill pill-warning"><i class="fas fa-car"></i></span> Arriving at pickup</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.setTripStatus('pickedup', this)"><span class="pill pill-info"><i class="fas fa-user-check"></i></span> Passenger picked up</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.setTripStatus('approaching', this)"><span class="pill pill-purple"><i class="fas fa-flag-checkered"></i></span> Approaching destination</button>
+          </div>
+          <div class="mt-3">
+            <div class="status-chip status-live" id="tripStatusChip"><span class="dot"></span> Driver is on the way</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="mb-2"><i class="fas fa-triangle-exclamation text-danger"></i> Emergency</h3>
+          <button class="sos-btn" onclick="RL.triggerSOS()"><i class="fas fa-triangle-exclamation"></i> SOS — Emergency</button>
+          <p class="text-xs text-muted mt-2">In a real deployment, SOS requires backend services, verified emergency contacts and location permissions. This prototype simulates the action.</p>
+        </div>
+      </div>
+
+      <div class="sim-notice"><i class="fas fa-circle-info"></i> This map is a visual simulation. Real GPS tracking requires a map provider (Google Maps / Mapbox / OpenStreetMap) and WebSocket updates.</div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: DRIVER DASHBOARD
+       ========================================================== -->
+  <section class="view" id="view-driver">
+    <div class="container section">
+      <div class="eyebrow"><i class="fas fa-steering-wheel"></i> Driver dashboard</div>
+      <h1 class="mb-3">Welcome back, Rahul</h1>
+
+      <div class="dash-grid">
+        <aside class="dash-side">
+          <div class="dash-nav">
+            <button class="dash-nav-item active" onclick="RL.driverTab('overview', this)"><i class="fas fa-gauge"></i> Overview</button>
+            <button class="dash-nav-item" onclick="RL.driverTab('trips', this)"><i class="fas fa-route"></i> Upcoming Trips</button>
+            <button class="dash-nav-item" onclick="RL.driverTab('active', this)"><i class="fas fa-circle-play"></i> Active Trip</button>
+            <button class="dash-nav-item" onclick="RL.driverTab('return', this)"><i class="fas fa-arrows-rotate"></i> Return Match</button>
+            <button class="dash-nav-item" onclick="RL.driverTab('earnings', this)"><i class="fas fa-indian-rupee-sign"></i> Earnings</button>
+            <button class="dash-nav-item" onclick="RL.driverTab('requests', this)"><i class="fas fa-user-plus"></i> Passenger Requests</button>
+            <button class="dash-nav-item" onclick="RL.driverTab('ratings', this)"><i class="fas fa-star"></i> Ratings</button>
+            <button class="dash-nav-item" onclick="RL.driverTab('vehicle', this)"><i class="fas fa-car"></i> Vehicle</button>
+            <button class="dash-nav-item" onclick="RL.driverTab('documents', this)"><i class="fas fa-file-shield"></i> Documents</button>
+            <button class="dash-nav-item" onclick="RL.driverTab('verification', this)"><i class="fas fa-id-badge"></i> Verification</button>
+          </div>
+        </aside>
+
+        <div id="driverDashBody"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: PASSENGER DASHBOARD
+       ========================================================== -->
+  <section class="view" id="view-passenger">
+    <div class="container section">
+      <div class="eyebrow"><i class="fas fa-user"></i> Passenger dashboard</div>
+      <h1 class="mb-3">My upcoming ride</h1>
+
+      <div class="grid grid-2">
+        <div class="card card-lg">
+          <div class="flex-between mb-3">
+            <span class="pill pill-accent"><i class="fas fa-clock"></i> Driver arriving</span>
+            <span class="verified-badge"><i class="fas fa-circle-check"></i> Identity verified</span>
+          </div>
+          <div class="ride-head">
+            <img class="avatar avatar-lg" src="https://i.pravatar.cc/120?img=12" alt="Rahul Sharma">
+            <div>
+              <h3>Rahul Sharma <i class="fas fa-circle-check text-success" style="font-size:0.8rem;"></i></h3>
+              <div class="text-sm text-soft">Maruti Suzuki Ertiga · White</div>
+              <div class="flex gap-sm mt-1">
+                <span class="pill pill-warning"><i class="fas fa-star"></i> 4.9</span>
+                <span class="pill pill-neutral">412 trips</span>
+              </div>
+            </div>
+          </div>
+          <div class="ride-detail-grid mt-2">
+            <div class="detail-item"><div class="k">Route</div><div class="v">Jamshedpur → Ranchi</div></div>
+            <div class="detail-item"><div class="k">Pickup</div><div class="v">Sakchi</div></div>
+            <div class="detail-item"><div class="k">Drop</div><div class="v">Ranchi Main Road</div></div>
+            <div class="detail-item"><div class="k">Departure</div><div class="v">8:00 AM</div></div>
+            <div class="detail-item"><div class="k">Seat</div><div class="v">2</div></div>
+            <div class="detail-item"><div class="k">Fare</div><div class="v text-accent fw-800">₹1,100</div></div>
+          </div>
+          <div class="grid grid-2 mt-3" style="gap:0.6rem;">
+            <button class="btn btn-primary btn-sm" onclick="RL.navigate('tracking')"><i class="fas fa-location-crosshairs"></i> Track Driver</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.toast('Calling driver... (simulated)','info')"><i class="fas fa-phone"></i> Contact Driver</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.toast('Trip link copied — share with family.','success')"><i class="fas fa-share-nodes"></i> Share Trip</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.cancelBooking()"><i class="fas fa-xmark"></i> Cancel Booking</button>
+          </div>
+          <button class="btn btn-danger btn-block mt-2" onclick="RL.triggerSOS()"><i class="fas fa-triangle-exclamation"></i> Emergency</button>
+        </div>
+
+        <div>
+          <div class="card mb-2">
+            <h3 class="mb-2">Pricing breakdown</h3>
+            <div class="price-row"><span>Base trip (private)</span><span class="fw-700">₹3,500</span></div>
+            <div class="price-row"><span>Shared passenger contribution</span><span class="fw-700 text-success">−₹2,400</span></div>
+            <div class="price-row"><span>Platform fee</span><span class="fw-700">₹100</span></div>
+            <div class="price-row total"><span>You pay</span><span class="text-accent">₹1,100</span></div>
+            <div class="savings-banner mt-2"><i class="fas fa-piggy-bank"></i> Estimated saving: ₹2,400 vs private car</div>
+            <p class="text-xs text-muted mt-2">Estimates only. Actual fares may vary with distance, tolls and demand.</p>
+          </div>
+
+          <div class="card">
+            <h3 class="mb-2"><i class="fas fa-shield-halved text-accent"></i> Passenger verification</h3>
+            <div class="flex-col gap-sm">
+              <div class="flex-between"><span class="text-sm">Government ID</span><span class="verified-badge"><i class="fas fa-check"></i> Verified</span></div>
+              <div class="flex-between"><span class="text-sm">Phone</span><span class="verified-badge"><i class="fas fa-check"></i> Verified</span></div>
+              <div class="flex-between"><span class="text-sm">Email</span><span class="verified-badge"><i class="fas fa-check"></i> Verified</span></div>
+              <div class="flex-between"><span class="text-sm">Profile photo</span><span class="verified-badge"><i class="fas fa-check"></i> Added</span></div>
+            </div>
+            <p class="text-xs text-muted mt-2">Full government ID numbers are never exposed publicly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: CAR RENTAL
+       ========================================================== -->
+  <section class="view" id="view-rental">
+    <div class="container section">
+      <div class="eyebrow"><i class="fas fa-car"></i> Car rental</div>
+      <h1 class="mb-2">Rent a car, your way</h1>
+      <p class="mb-3">Self-drive or chauffeur-driven. Transparent daily rates and deposits.</p>
+
+      <div class="category-scroll mb-3" id="rentalCategories"></div>
+      <div class="grid grid-auto" id="rentalGrid"></div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: SAFETY
+       ========================================================== -->
+  <section class="view" id="view-safety">
+    <div class="container section">
+      <div class="eyebrow"><i class="fas fa-shield-halved"></i> Safety center</div>
+      <h1 class="mb-2">Your safety is non-negotiable</h1>
+      <p class="mb-3">Verification, trip sharing and emergency tools — all in one place.</p>
+
+      <div class="grid grid-2 mb-3">
+        <div class="card card-lg" style="border-color:var(--danger);">
+          <h3 class="mb-2"><i class="fas fa-triangle-exclamation text-danger"></i> Emergency</h3>
+          <button class="sos-btn" onclick="RL.triggerSOS()"><i class="fas fa-triangle-exclamation"></i> SOS — Emergency</button>
+          <div class="grid grid-2 mt-3" style="gap:0.6rem;">
+            <button class="btn btn-outline btn-sm" onclick="RL.toast('Live trip shared with 2 contacts.','success')"><i class="fas fa-share-nodes"></i> Share live trip</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.toast('Emergency contacts opened.','info')"><i class="fas fa-address-book"></i> Emergency contacts</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.toast('Report submitted for review.','warning')"><i class="fas fa-flag"></i> Report user</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.toast('Vehicle report submitted.','warning')"><i class="fas fa-car-burst"></i> Report vehicle</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.cancelBooking()"><i class="fas fa-xmark"></i> Cancel trip</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.toast('Support center — agent connecting...','info')"><i class="fas fa-headset"></i> Support center</button>
+          </div>
+          <p class="text-xs text-muted mt-2">SOS, live location and identity verification require backend services and explicit user permissions in a production build.</p>
+        </div>
+
+        <div class="card card-lg">
+          <h3 class="mb-2"><i class="fas fa-list-check text-accent"></i> Safety guidelines</h3>
+          <ul class="text-sm" style="padding-left:1.2rem; display:flex; flex-direction:column; gap:0.5rem;">
+            <li>Always verify the driver's profile photo and vehicle number before boarding.</li>
+            <li>Share your live trip with a trusted contact.</li>
+            <li>Sit in the back seat on solo trips where possible.</li>
+            <li>Use the in-app SOS button in any emergency.</li>
+            <li>Never share OTPs or personal documents outside the platform.</li>
+            <li>Rate your co-passengers and drivers after every trip.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="safety-tile" onclick="RL.toast('Driver verification details opened.','info')">
+          <div class="s-ico" style="background:var(--success-soft); color:var(--success);"><i class="fas fa-id-card"></i></div>
+          <div><h4>Driver verification</h4><p class="text-sm">Government ID, license, vehicle documents, phone & email.</p></div>
+        </div>
+        <div class="safety-tile" onclick="RL.toast('Passenger verification details opened.','info')">
+          <div class="s-ico" style="background:var(--info-soft); color:var(--info);"><i class="fas fa-user-check"></i></div>
+          <div><h4>Passenger verification</h4><p class="text-sm">Government ID, phone, email and profile photo.</p></div>
+        </div>
+        <div class="safety-tile" onclick="RL.toast('Trip sharing enabled.','success')">
+          <div class="s-ico" style="background:var(--accent-soft); color:var(--accent);"><i class="fas fa-share-nodes"></i></div>
+          <div><h4>Trip sharing</h4><p class="text-sm">Send live location to family and friends.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: PROFILE
+       ========================================================== -->
+  <section class="view" id="view-profile">
+    <div class="container section">
+      <div class="eyebrow"><i class="fas fa-user"></i> Profile</div>
+      <h1 class="mb-3">Your account</h1>
+
+      <div class="grid grid-2">
+        <div class="card card-lg">
+          <div class="flex gap items-center mb-3">
+            <img class="avatar avatar-lg" src="https://i.pravatar.cc/120?img=33" alt="Profile">
+            <div>
+              <h3>Ananya Verma <span class="verified-badge"><i class="fas fa-check"></i> Verified</span></h3>
+              <div class="text-sm text-soft">ananya@example.com</div>
+              <div class="flex gap-sm mt-1">
+                <span class="pill pill-warning"><i class="fas fa-star"></i> 4.8</span>
+                <span class="pill pill-neutral">28 trips</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex-col gap-sm">
+            <div class="flex-between"><span class="text-sm">Government ID</span><span class="verified-badge"><i class="fas fa-check"></i> Verified</span></div>
+            <div class="flex-between"><span class="text-sm">Phone</span><span class="verified-badge"><i class="fas fa-check"></i> Verified</span></div>
+            <div class="flex-between"><span class="text-sm">Email</span><span class="verified-badge"><i class="fas fa-check"></i> Verified</span></div>
+          </div>
+          <button class="btn btn-outline btn-block mt-3" onclick="RL.toast('Edit profile (simulated)','info')"><i class="fas fa-pen"></i> Edit profile</button>
+        </div>
+
+        <div class="card card-lg">
+          <h3 class="mb-2">Preferences</h3>
+          <div class="flex-col gap-sm">
+            <div class="flex-between"><span class="text-sm">Theme</span><button class="btn btn-ghost btn-sm" onclick="RL.toggleTheme()"><i class="fas fa-circle-half-stroke"></i> Toggle</button></div>
+            <div class="flex-between"><span class="text-sm">Notifications</span><button class="btn btn-ghost btn-sm" onclick="RL.toast('Notification settings (simulated)','info')">Manage</button></div>
+            <div class="flex-between"><span class="text-sm">Payment methods</span><button class="btn btn-ghost btn-sm" onclick="RL.toast('Payment methods (simulated)','info')">Manage</button></div>
+            <div class="flex-between"><span class="text-sm">Emergency contacts</span><button class="btn btn-ghost btn-sm" onclick="RL.toast('Emergency contacts (simulated)','info')">Edit</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       VIEW: LOGIN / REGISTER
+       ========================================================== -->
+  <section class="view" id="view-auth">
+    <div class="auth-wrap">
+      <div class="auth-card">
+        <div class="text-center mb-3">
+          <div class="logo-mark" style="margin:0 auto 0.6rem;"><i class="fas fa-route"></i></div>
+          <h2 id="authTitle">Welcome back</h2>
+          <p class="text-sm">Login or create your RideLoop account</p>
+        </div>
+
+        <div class="search-tabs mb-3">
+          <button class="search-tab active" id="tabLogin" onclick="RL.authTab('login')">Login</button>
+          <button class="search-tab" id="tabRegister" onclick="RL.authTab('register')">Register</button>
+        </div>
+
+        <form id="authForm" onsubmit="return RL.handleAuth(event)">
+          <div class="field mb-2" id="nameField" style="display:none;">
+            <label for="authName"><i class="fas fa-user"></i> Full name</label>
+            <input class="input" id="authName" placeholder="Your name">
+          </div>
+          <div class="field mb-2">
+            <label for="authEmail"><i class="fas fa-envelope"></i> Email</label>
+            <input class="input" id="authEmail" type="email" placeholder="you@example.com" required>
+            <div class="error-msg" id="emailError">Please enter a valid email address.</div>
+          </div>
+          <div class="field mb-3">
+            <label for="authPass"><i class="fas fa-lock"></i> Password</label>
+            <input class="input" id="authPass" type="password" placeholder="••••••••" required>
+            <div class="error-msg" id="passError">Password must be at least 6 characters.</div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg" id="authSubmit">Login</button>
+        </form>
+
+        <p class="text-xs text-muted text-center mt-3">By continuing you agree to RideLoop's Terms & Safety Policy. This is a prototype — no real accounts are created.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     MOBILE BOTTOM NAV
+     ============================================================ -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bnav-item active" data-view="home" onclick="RL.navigate('home')"><i class="fas fa-house"></i> Home</button>
+    <button class="bnav-item" data-view="find" onclick="RL.navigate('find')"><i class="fas fa-magnifying-glass"></i> Find</button>
+    <button class="bnav-item" data-view="rental" onclick="RL.navigate('rental')"><i class="fas fa-car"></i> Rent</button>
+    <button class="bnav-item" data-view="bookings" onclick="RL.navigate('bookings')"><i class="fas fa-ticket"></i> Trips</button>
+    <button class="bnav-item" data-view="safety" onclick="RL.navigate('safety')"><i class="fas fa-shield-halved"></i> Safety</button>
+  </div>
+</nav>
+
+<!-- ============================================================
+     MODAL + TOAST CONTAINERS
+     ============================================================ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBody"></div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+/* ============================================================
+   RIDELOOP — VANILLA JS APPLICATION
+   ============================================================
+   A prototype for a car-rental + long-distance ride-sharing platform.
+   All data is sample data. Matching scores are illustrative.
+
+   FUTURE BACKEND ARCHITECTURE (comments at bottom).
+   ============================================================ */
+
+const RL = (function () {
+  'use strict';
+
+  /* ==========================================================
+     STATE
+     ========================================================== */
+  const state = {
+    view: 'home',
+    theme: 'light',
+    booking: null,             // active booking object
+    tripStatus: 'onway',
+    currentFilter: 'all',
+    search: { from: 'Jamshedpur', to: 'Ranchi', date: '', time: '08:00', passengers: 2 },
+    sort: 'match',
+    authMode: 'login',
+    driverTab: 'overview',
+    selectedRide: null,
+    rentalCategory: 'all',
+    bookings: [
+      { id: 'RL28491', route: 'Jamshedpur → Ranchi', date: '21 Sep', time: '8:00 AM', seat: 2, fare: 1100, status: 'Driver arriving', driver: 'Rahul Sharma' },
+      { id: 'RL28110', route: 'Ranchi → Jamshedpur', date: '24 Sep', time: '6:30 PM', seat: 1, fare: 950, status: 'Completed', driver: 'Priya Nair' }
+    ]
+  };
+
+  /* ==========================================================
+     SAMPLE DATA
+     ========================================================== */
+
+  // Rides (search results)
+  const RIDES = [
+    {
+      id: 'R1', driver: 'Rahul Sharma', avatar: 'https://i.pravatar.cc/120?img=12', verified: true,
+      car: 'Maruti Suzuki Ertiga', carNo: 'JH 05 •• 4821', color: 'White',
+      from: 'Jamshedpur', to: 'Ranchi', distance: 200,
+      depart: '08:00', arrive: '11:20', seatsTotal: 4, seatsAvailable: 2,
+      price: 1100, rating: 4.9, trips: 412,
+      pickup: 'Sakchi', drop: 'Ranchi Main Road',
+      cancel: 'Free cancellation up to 2 hours before departure',
+      compat: { route: 92, time: 85, pickup: 96, overall: 91 }
+    },
+    {
+      id: 'R2', driver: 'Priya Nair', avatar: 'https://i.pravatar.cc/120?img=45', verified: true,
+      car: 'Hyundai Creta', carNo: 'JH 09 •• 7710', color: 'Grey',
+      from: 'Jamshedpur', to: 'Ranchi', distance: 200,
+      depart: '09:30', arrive: '12:45', seatsTotal: 5, seatsAvailable: 3,
+      price: 950, rating: 4.8, trips: 287,
+      pickup: 'Bistupur', drop: 'Ranchi Station',
+      cancel: 'Free cancellation up to 4 hours before departure',
+      compat: { route: 88, time: 92, pickup: 81, overall: 87 }
+    },
+    {
+      id: 'R3', driver: 'Amit Kumar', avatar: 'https://i.pravatar.cc/120?img=33', verified: true,
+      car: 'Toyota Innova', carNo: 'JH 01 •• 2298', color: 'Silver',
+      from: 'Jamshedpur', to: 'Ranchi', distance: 200,
+      depart: '07:00', arrive: '10:15', seatsTotal: 6, seatsAvailable: 4,
+      price: 1250, rating: 4.7, trips: 156,
+      pickup: 'Mango', drop: 'Ranchi Airport Road',
+      cancel: 'Free cancellation up to 6 hours before departure',
+      compat: { route: 95, time: 78, pickup: 88, overall: 89 }
+    },
+    {
+      id: 'R4', driver: 'Sneha Das', avatar: 'https://i.pravatar.cc/120?img=20', verified: true,
+      car: 'Honda City', carNo: 'JH 06 •• 5540', color: 'Black',
+      from: 'Jamshedpur', to: 'Ranchi', distance: 200,
+      depart: '11:00', arrive: '14:20', seatsTotal: 4, seatsAvailable: 1,
+      price: 1050, rating: 5.0, trips: 521,
+      pickup: 'Adityapur', drop: 'Ranchi Main Road',
+      cancel: 'Free cancellation up to 3 hours before departure',
+      compat: { route: 90, time: 95, pickup: 92, overall: 92 }
+    },
+    {
+      id: 'R5', driver: 'Vikram Singh', avatar: 'https://i.pravatar.cc/120?img=51', verified: true,
+      car: 'Mahindra XUV700', carNo: 'JH 10 •• 1187', color: 'Blue',
+      from: 'Jamshedpur', to: 'Ranchi', distance: 200,
+      depart: '06:00', arrive: '09:10', seatsTotal: 6, seatsAvailable: 5,
+      price: 1350, rating: 4.6, trips: 98,
+      pickup: 'Telco', drop: 'Ranchi Main Road',
+      cancel: 'Free cancellation up to 5 hours before departure',
+      compat: { route: 86, time: 70, pickup: 75, overall: 79 }
+    }
+  ];
+
+  // Return passengers (for driver's return trip)
+  const RETURN_PASSENGERS = [
+    { id: 'P1', name: 'Arjun Mehta', avatar: 'https://i.pravatar.cc/80?img=8', pickup: 'Ranchi Main Road', drop: 'Sakchi, Jamshedpur', time: '5:30 PM', fare: 1200, compat: 94 },
+    { id: 'P2', name: 'Kavya Reddy', avatar: 'https://i.pravatar.cc/80?img=25', pickup: 'Ranchi Station', drop: 'Bistupur, Jamshedpur', time: '6:00 PM', fare: 1100, compat: 88 },
+    { id: 'P3', name: 'Rohan Gupta', avatar: 'https://i.pravatar.cc/80?img=60', pickup: 'Ranchi Airport Road', drop: 'Mango, Jamshedpur', time: '7:15 PM', fare: 1300, compat: 82 }
+  ];
+
+  // Rental cars
+  const RENTALS = [
+    { id: 'C1', name: 'Maruti Swift', category: 'economy', icon: '🚗', seats: 5, fuel: 'Petrol', trans: 'Manual', price: 1800, deposit: 3000, rating: 4.7, available: true, img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=500&h=300&fit=crop' },
+    { id: 'C2', name: 'Honda City', category: 'sedan', icon: '🚙', seats: 5, fuel: 'Petrol', trans: 'Automatic', price: 2600, deposit: 5000, rating: 4.8, available: true, img: 'https://images.unsplash.com/photo-1590362891991-f776e747a588?w=500&h=300&fit=crop' },
+    { id: 'C3', name: 'Toyota Innova', category: 'suv', icon: '🚐', seats: 7, fuel: 'Diesel', trans: 'Manual', price: 3200, deposit: 6000, rating: 4.9, available: true, img: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?w=500&h=300&fit=crop' },
+    { id: 'C4', name: 'BMW 3 Series', category: 'luxury', icon: '🏎️', seats: 5, fuel: 'Petrol', trans: 'Automatic', price: 8500, deposit: 20000, rating: 5.0, available: true, img: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=500&h=300&fit=crop' },
+    { id: 'C5', name: 'Kia Carens', category: '7seater', icon: '🚐', seats: 7, fuel: 'Diesel', trans: 'Automatic', price: 3000, deposit: 5000, rating: 4.7, available: false, img: 'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=500&h=300&fit=crop' },
+    { id: 'C6', name: 'Tata Nexon EV', category: 'electric', icon: '⚡', seats: 5, fuel: 'Electric', trans: 'Automatic', price: 2800, deposit: 5000, rating: 4.8, available: true, img: 'https://images.unsplash.com/photo-1617788138017-80ad40651399?w=500&h=300&fit=crop' },
+    { id: 'C7', name: 'Hyundai Verna', category: 'sedan', icon: '🚗', seats: 5, fuel: 'Petrol', trans: 'Automatic', price: 2400, deposit: 4000, rating: 4.6, available: true, img: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=500&h=300&fit=crop' },
+    { id: 'C8', name: 'MG Hector', category: 'suv', icon: '🚙', seats: 5, fuel: 'Diesel', trans: 'Manual', price: 3100, deposit: 6000, rating: 4.7, available: true, img: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500&h=300&fit=crop' }
+  ];
+
+  const RENTAL_CATEGORIES = [
+    { key: 'all', label: 'All', icon: 'fa-car' },
+    { key: 'economy', label: 'Economy', icon: 'fa-coins' },
+    { key: 'sedan', label: 'Sedan', icon: 'fa-car-side' },
+    { key: 'suv', label: 'SUV', icon: 'fa-truck-monster' },
+    { key: 'luxury', label: 'Luxury', icon: 'fa-gem' },
+    { key: '7seater', label: '7-Seater', icon: 'fa-van-shuttle' },
+    { key: 'electric', label: 'Electric', icon: 'fa-bolt' }
+  ];
+
+  // Booking timeline stages
+  const TIMELINE_STAGES = [
+    { key: 'requested', label: 'Booking requested', sub: 'Your request was sent to the driver.', done: true },
+    { key: 'accepted', label: 'Driver accepted', sub: 'Rahul Sharma accepted your booking.', done: true },
+    { key: 'pickup', label: 'Pickup confirmed', sub: 'Pickup point: Sakchi, 8:00 AM.', done: true },
+    { key: 'approaching', label: 'Driver approaching', sub: 'Driver is 8 minutes away.', active: true },
+    { key: 'pickedup', label: 'Passenger picked up', sub: 'Awaiting pickup.' },
+    { key: 'started', label: 'Trip started', sub: 'Trip will begin after pickup.' },
+    { key: 'reached', label: 'Destination reached', sub: 'Ranchi Main Road.' },
+    { key: 'paid', label: 'Payment completed', sub: 'Payment will be processed after trip.' }
+  ];
+
+  /* ==========================================================
+     UTILITIES
+     ========================================================== */
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+
+  const fmt = (n) => '₹' + Number(n).toLocaleString('en-IN');
+
+  function todayISO() {
+    const d = new Date();
+    return d.toISOString().split('T')[0];
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+  }
+
+  function stars(rating) {
+    const full = Math.floor(rating);
+    const half = rating - full >= 0.5;
+    let html = '';
+    for (let i = 0; i < full; i++) html += '<i class="fas fa-star"></i>';
+    if (half) html += '<i class="fas fa-star-half-alt"></i>';
+    const empty = 5 - full - (half ? 1 : 0);
+    for (let i = 0; i < empty; i++) html += '<i class="far fa-star"></i>';
+    return html;
+  }
+
+  /* ==========================================================
+     TOASTS
+     ========================================================== */
+  function toast(msg, type = 'info', ms = 3200) {
+    const wrap = $('#toastWrap');
+    const el = document.createElement('div');
+    el.className = 'toast ' + type;
+    const icons = { success: 'fa-circle-check', danger: 'fa-circle-exclamation', info: 'fa-circle-info', warning: 'fa-triangle-exclamation' };
+    el.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i><span>${escapeHtml(msg)}</span>`;
+    wrap.appendChild(el);
+    setTimeout(() => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateX(30px)';
+      setTimeout(() => el.remove(), 300);
+    }, ms);
+  }
+
+  /* ==========================================================
+     THEME
+     ========================================================== */
+  function applyTheme(theme) {
+    state.theme = theme;
+    document.body.classList.toggle('dark', theme === 'dark');
+    const icon = $('#themeToggle i');
+    if (icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+    try { sessionStorage.setItem('rl-theme', theme); } catch (e) {}
+  }
+
+  function toggleTheme() {
+    applyTheme(state.theme === 'dark' ? 'light' : 'dark');
+    toast(state.theme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled', 'info', 1800);
+  }
+
+  function initTheme() {
+    let saved = null;
+    try { saved = sessionStorage.getItem('rl-theme'); } catch (e) {}
+    applyTheme(saved === 'dark' ? 'dark' : 'light');
+  }
+
+  /* ==========================================================
+     NAVIGATION
+     ========================================================== */
+  const VIEW_IDS = ['home', 'find', 'details', 'bookings', 'tracking', 'driver', 'passenger', 'rental', 'safety', 'profile', 'auth'];
+
+  function navigate(view, opts = {}) {
+    if (!VIEW_IDS.includes(view)) view = 'home';
+    state.view = view;
+
+    $$('.view').forEach(v => v.classList.remove('active'));
+    const target = $('#view-' + view);
+    if (target) target.classList.add('active');
+
+    $$('.nav-link').forEach(l => l.classList.toggle('active', l.dataset.view === view));
+    $$('.bnav-item').forEach(l => l.classList.toggle('active', l.dataset.view === view));
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Lazy-render views that need data
+    if (view === 'find') { renderRides(); renderReturnPassengers(); }
+    if (view === 'rental') { renderRentalCategories(); renderRentalGrid(); }
+    if (view === 'bookings') { renderBookings(); renderTimeline(); }
+    if (view === 'tracking') { mountMap('trackingMapContainer'); }
+    if (view === 'driver') { renderDriverTab(state.driverTab); }
+    if (view === 'home') { mountMap('homeMapContainer'); }
+
+    if (opts.toast) toast(opts.toast, opts.type || 'info');
+  }
+
+  /* ==========================================================
+     SEARCH
+     ========================================================== */
+  function handleSearch(e, goToFind) {
+    e.preventDefault();
+    const form = e.target;
+    const from = form.from.value.trim();
+    const to = form.to.value.trim();
+    const date = form.date.value;
+    const time = form.time.value;
+    const passengers = parseInt(form.passengers.value, 10);
+
+    // Validation
+    let ok = true;
+    if (!from || from.length < 2) { toast('Please enter a valid origin city.', 'danger'); ok = false; }
+    if (!to || to.length < 2) { toast('Please enter a valid destination city.', 'danger'); ok = false; }
+    if (from && to && from.toLowerCase() === to.toLowerCase()) { toast('Origin and destination cannot be the same.', 'danger'); ok = false; }
+    if (!date) { toast('Please choose a travel date.', 'danger'); ok = false; }
+    if (!ok) return false;
+
+    state.search = { from, to, date, time, passengers };
+    toast(`Searching rides from ${from} to ${to}…`, 'info', 1800);
+
+    if (goToFind) {
+      renderRides();
+      renderReturnPassengers();
+    } else {
+      navigate('find');
+    }
+    return false;
+  }
+
+  function resetFilters() {
+    const f = $('#findForm');
+    if (!f) return;
+    f.from.value = 'Jamshedpur';
+    f.to.value = 'Ranchi';
+    f.date.value = todayISO();
+    f.time.value = '08:00';
+    f.pax.value = '2';
+    state.search = { from: 'Jamshedpur', to: 'Ranchi', date: todayISO(), time: '08:00', passengers: 2 };
+    renderRides();
+    toast('Filters reset', 'info', 1600);
+  }
+
+  function swapCities(aId, bId) {
+    const a = $('#' + aId), b = $('#' + bId);
+    if (!a || !b) return;
+    [a.value, b.value] = [b.value, a.value];
+  }
+
+  function applySort() {
+    state.sort = $('#sortSelect') ? $('#sortSelect').value : 'match';
+    renderRides();
+  }
+
+  /* ==========================================================
+     RIDE RENDERING
+     ========================================================== */
+  function filteredRides() {
+    const { from, to } = state.search;
+    const f = from.toLowerCase(), t = to.toLowerCase();
+    let list = RIDES.filter(r =>
+      (r.from.toLowerCase().includes(f) || f.includes(r.from.toLowerCase())) &&
+      (r.to.toLowerCase().includes(t) || t.includes(r.to.toLowerCase()))
+    );
+    if (!list.length) list = RIDES.slice(); // fallback so the UI is never empty
+
+    const sorters = {
+      match: (a, b) => b.compat.overall - a.compat.overall,
+      price: (a, b) => a.price - b.price,
+      rating: (a, b) => b.rating - a.rating,
+      depart: (a, b) => a.depart.localeCompare(b.depart)
+    };
+    return list.sort(sorters[state.sort] || sorters.match);
+  }
+
+  function renderRides() {
+    const container = $('#rideResults');
+    if (!container) return;
+
+    const list = filteredRides();
+    const title = $('#resultsTitle');
+    if (title) title.textContent = `${list.length} ride${list.length === 1 ? '' : 's'} found · ${state.search.from} → ${state.search.to}`;
+
+    if (!list.length) {
+      container.innerHTML = `<div class="card text-center"><i class="fas fa-car-side" style="font-size:2.5rem;color:var(--text-muted);"></i><h3 class="mt-2">No rides found</h3><p>Try a different route or date.</p></div>`;
+      return;
+    }
+
+    container.innerHTML = list.map(r => `
+      <div class="ride-card">
+        <div class="ride-head">
+          <img class="avatar" src="${r.avatar}" alt="${escapeHtml(r.driver)}">
+          <div class="flex-1">
+            <div class="flex-between flex-wrap gap-sm">
+              <div>
+                <h3>${escapeHtml(r.driver)} ${r.verified ? '<span class="verified-badge"><i class="fas fa-check"></i> Verified</span>' : ''}</h3>
+                <div class="text-sm text-soft">${escapeHtml(r.car)} · ${escapeHtml(r.color)} · <span class="text-muted">${escapeHtml(r.carNo)}</span></div>
+              </div>
+              <div class="text-right">
+                <div class="fw-800 text-accent" style="font-size:1.4rem;">${fmt(r.price)}</div>
+                <div class="text-xs text-muted">per passenger</div>
+              </div>
+            </div>
+            <div class="flex gap-sm mt-1 flex-wrap">
+              <span class="pill pill-warning"><i class="fas fa-star"></i> ${r.rating}</span>
+              <span class="pill pill-neutral"><i class="fas fa-route"></i> ${r.trips} trips</span>
+              <span class="pill pill-info"><i class="fas fa-clock"></i> ${r.depart} → ${r.arrive}</span>
+              <span class="pill pill-success"><i class="fas fa-chair"></i> ${r.seatsAvailable} seats left</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ride-route-line">
+          <i class="fas fa-circle-dot text-accent"></i> ${escapeHtml(r.pickup)}
+          <i class="fas fa-arrow-right route-arrow" style="font-size:0.8rem;"></i>
+          <i class="fas fa-location-dot text-danger"></i> ${escapeHtml(r.drop)}
+        </div>
+
+        <div class="ride-detail-grid">
+          <div class="detail-item"><div class="k">Route</div><div class="v">${escapeHtml(r.from)} → ${escapeHtml(r.to)}</div></div>
+          <div class="detail-item"><div class="k">Distance</div><div class="v">${r.distance} km</div></div>
+          <div class="detail-item"><div class="k">Departure</div><div class="v">${r.depart}</div></div>
+          <div class="detail-item"><div class="k">Arrival</div><div class="v">${r.arrive}</div></div>
+          <div class="detail-item">
+            <div class="k">Seats</div>
+            <div class="v"><span class="seat-dots">${Array.from({length: r.seatsTotal}, (_, i) => `<span class="seat-dot ${i < r.seatsTotal - r.seatsAvailable ? 'filled' : 'available'}"></span>`).join('')}</span></div>
+          </div>
+          <div class="detail-item">
+            <div class="k">Match</div>
+            <div class="v">${r.compat.overall}% compatible</div>
+            <div class="compat-bar"><div class="compat-fill" style="width:${r.compat.overall}%"></div></div>
+          </div>
+        </div>
+
+        <div class="flex gap-sm flex-wrap">
+          <button class="btn btn-outline btn-sm" onclick="RL.viewRide('${r.id}')"><i class="fas fa-eye"></i> View Ride</button>
+          <button class="btn btn-primary btn-sm" onclick="RL.bookSeat('${r.id}')" ${r.seatsAvailable === 0 ? 'disabled' : ''}><i class="fas fa-chair"></i> Book Seat</button>
+          <span class="text-xs text-muted" style="align-self:center;"><i class="fas fa-shield"></i> ${escapeHtml(r.cancel)}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  /* ==========================================================
+     RIDE DETAILS
+     ========================================================== */
+  function viewRide(id) {
+    const r = RIDES.find(x => x.id === id);
+    if (!r) return;
+    state.selectedRide = r;
+
+    const body = $('#rideDetailsBody');
+    body.innerHTML = `
+      <div class="grid grid-2">
+        <div class="card card-lg">
+          <div class="flex-between mb-3">
+            <span class="pill pill-accent"><i class="fas fa-route"></i> Ride details</span>
+            <span class="verified-badge"><i class="fas fa-circle-check"></i> Verified driver</span>
+          </div>
+          <div class="ride-head">
+            <img class="avatar avatar-lg" src="${r.avatar}" alt="${escapeHtml(r.driver)}">
+            <div>
+              <h2>${escapeHtml(r.driver)}</h2>
+              <div class="text-soft">${escapeHtml(r.car)} · ${escapeHtml(r.color)}</div>
+              <div class="text-muted text-sm">${escapeHtml(r.carNo)}</div>
+              <div class="flex gap-sm mt-1 flex-wrap">
+                <span class="pill pill-warning"><i class="fas fa-star"></i> ${r.rating}</span>
+                <span class="pill pill-neutral"><i class="fas fa-route"></i> ${r.trips} trips</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ride-route-line mt-3">
+            <i class="fas fa-circle-dot text-accent"></i> ${escapeHtml(r.pickup)}
+            <i class="fas fa-arrow-right route-arrow"></i>
+            <i class="fas fa-location-dot text-danger"></i> ${escapeHtml(r.drop)}
+          </div>
+
+          <div class="ride-detail-grid mt-2">
+            <div class="detail-item"><div class="k">From</div><div class="v">${escapeHtml(r.from)}</div></div>
+            <div class="detail-item"><div class="k">To</div><div class="v">${escapeHtml(r.to)}</div></div>
+            <div class="detail-item"><div class="k">Distance</div><div class="v">${r.distance} km</div></div>
+            <div class="detail-item"><div class="k">Departure</div><div class="v">${r.depart}</div></div>
+            <div class="detail-item"><div class="k">Arrival</div><div class="v">${r.arrive}</div></div>
+            <div class="detail-item"><div class="k">Seats left</div><div class="v">${r.seatsAvailable} / ${r.seatsTotal}</div></div>
+          </div>
+
+          <div class="mt-3">
+            <h4 class="mb-1">Match compatibility</h4>
+            ${compatRow('Route', r.compat.route)}
+            ${compatRow('Time', r.compat.time)}
+            ${compatRow('Pickup', r.compat.pickup)}
+            <div class="flex-between mt-2 fw-800"><span>Overall</span><span class="text-accent">${r.compat.overall}% Compatible</span></div>
+          </div>
+
+          <div class="disclaimer mt-3"><i class="fas fa-circle-info"></i> Compatibility scores are illustrative and not a production-grade routing algorithm. They can later connect to a real routing service.</div>
+        </div>
+
+        <div>
+          <div class="card mb-2">
+            <h3 class="mb-2">Pricing</h3>
+            <div class="price-row"><span>Base trip (private)</span><span class="fw-700">₹3,500</span></div>
+            <div class="price-row"><span>Shared passenger contribution</span><span class="fw-700 text-success">−₹2,400</span></div>
+            <div class="price-row"><span>Platform fee</span><span class="fw-700">₹100</span></div>
+            <div class="price-row total"><span>Total per passenger</span><span class="text-accent">${fmt(r.price)}</span></div>
+            <div class="savings-banner mt-2"><i class="fas fa-piggy-bank"></i> Estimated saving: ₹2,400</div>
+          </div>
+
+          <div class="card mb-2">
+            <h3 class="mb-2">Cancellation policy</h3>
+            <p class="text-sm">${escapeHtml(r.cancel)}</p>
+          </div>
+
+          <button class="btn btn-primary btn-block btn-lg" onclick="RL.bookSeat('${r.id}')" ${r.seatsAvailable === 0 ? 'disabled' : ''}>
+            <i class="fas fa-chair"></i> Book Seat — ${fmt(r.price)}
+          </button>
+          <button class="btn btn-outline btn-block mt-2" onclick="RL.navigate('find')"><i class="fas fa-arrow-left"></i> Back to results</button>
+        </div>
+      </div>
+    `;
+    navigate('details');
+  }
+
+  function compatRow(label, val) {
+    return `
+      <div class="mb-1">
+        <div class="flex-between text-sm"><span>${label} match</span><span class="fw-700">${val}%</span></div>
+        <div class="compat-bar"><div class="compat-fill" style="width:${val}%"></div></div>
+      </div>
+    `;
+  }
+
+  /* ==========================================================
+     BOOKING
+     ========================================================== */
+  function bookSeat(id) {
+    const r = RIDES.find(x => x.id === id);
+    if (!r) return;
+    if (r.seatsAvailable <= 0) { toast('No seats available on this ride.', 'danger'); return; }
+
+    r.seatsAvailable -= 1;
+    const booking = {
+      id: 'RL' + Math.floor(10000 + Math.random() * 90000),
+      rideId: r.id,
+      driver: r.driver,
+      avatar: r.avatar,
+      car: r.car,
+      route: `${r.from} → ${r.to}`,
+      pickup: r.pickup,
+      drop: r.drop,
+      date: state.search.date || todayISO(),
+      time: r.depart,
+      seat: r.seatsTotal - r.seatsAvailable,
+      fare: r.price,
+      status: 'Booking confirmed'
+    };
+    state.booking = booking;
+    state.bookings.unshift({
+      id: booking.id, route: booking.route, date: booking.date, time: booking.time,
+      seat: booking.seat, fare: booking.fare, status: 'Driver arriving', driver: booking.driver
+    });
+
+    openModal(`
+      <div class="modal-head">
+        <div>
+          <span class="pill pill-success"><i class="fas fa-circle-check"></i> Booking confirmed</span>
+          <h2 class="mt-1">Seat booked!</h2>
+        </div>
+        <button class="modal-close" onclick="RL.closeModal()"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="card mb-2" style="box-shadow:none;">
+        <div class="ride-head">
+          <img class="avatar" src="${r.avatar}" alt="${escapeHtml(r.driver)}">
+          <div>
+            <h3>${escapeHtml(r.driver)}</h3>
+            <div class="text-sm text-soft">${escapeHtml(r.car)}</div>
+            <div class="text-xs text-muted">Booking #${booking.id}</div>
+          </div>
+        </div>
+        <div class="ride-detail-grid mt-2">
+          <div class="detail-item"><div class="k">Route</div><div class="v">${escapeHtml(booking.route)}</div></div>
+          <div class="detail-item"><div class="k">Pickup</div><div class="v">${escapeHtml(booking.pickup)}</div></div>
+          <div class="detail-item"><div class="k">Seat</div><div class="v">${booking.seat}</div></div>
+          <div class="detail-item"><div class="k">Fare</div><div class="v text-accent fw-800">${fmt(booking.fare)}</div></div>
+        </div>
+      </div>
+      <div class="grid grid-2" style="gap:0.6rem;">
+        <button class="btn btn-primary" onclick="RL.closeModal(); RL.navigate('tracking')"><i class="fas fa-location-crosshairs"></i> Track ride</button>
+        <button class="btn btn-outline" onclick="RL.closeModal(); RL.navigate('bookings')"><i class="fas fa-ticket"></i> My bookings</button>
+      </div>
+    `);
+
+    renderRides();
+    toast(`Seat booked on ${r.driver}'s ride. ${r.seatsAvailable} seats left.`, 'success');
+  }
+
+  function cancelBooking() {
+    openModal(`
+      <div class="modal-head">
+        <h3>Cancel booking?</h3>
+        <button class="modal-close" onclick="RL.closeModal()"><i class="fas fa-xmark"></i></button>
+      </div>
+      <p class="mb-3">Cancellation may be subject to the ride's policy. This action is simulated.</p>
+      <div class="grid grid-2" style="gap:0.6rem;">
+        <button class="btn btn-outline" onclick="RL.closeModal()">Keep booking</button>
+        <button class="btn btn-danger" onclick="RL.confirmCancel()">Cancel booking</button>
+      </div>
+    `);
+  }
+
+  function confirmCancel() {
+    closeModal();
+    toast('Booking cancelled. Refund will be processed per policy.', 'warning');
+  }
+
+  /* ==========================================================
+     RETURN PASSENGERS
+     ========================================================== */
+  function renderReturnPassengers() {
+    const container = $('#returnPassengers');
+    if (!container) return;
+    container.innerHTML = RETURN_PASSENGERS.map(p => `
+      <div class="card card-hover">
+        <div class="flex gap-sm items-center mb-2">
+          <img class="avatar" style="width:44px;height:44px;" src="${p.avatar}" alt="${escapeHtml(p.name)}">
+          <div>
+            <h4>${escapeHtml(p.name)}</h4>
+            <div class="text-xs text-muted"><i class="fas fa-star text-warning"></i> 4.8 · 21 trips</div>
+          </div>
+        </div>
+        <div class="text-sm mb-1"><i class="fas fa-circle-dot text-purple"></i> ${escapeHtml(p.pickup)}</div>
+        <div class="text-sm mb-1"><i class="fas fa-location-dot text-danger"></i> ${escapeHtml(p.drop)}</div>
+        <div class="flex gap-sm flex-wrap mb-2">
+          <span class="pill pill-info"><i class="fas fa-clock"></i> ${p.time}</span>
+          <span class="pill pill-success">${fmt(p.fare)}</span>
+        </div>
+        <div class="flex-between text-sm mb-1"><span>Route compatibility</span><span class="fw-700">${p.compat}%</span></div>
+        <div class="compat-bar mb-2"><div class="compat-fill" style="width:${p.compat}%"></div></div>
+        <button class="btn btn-ghost btn-sm btn-block" onclick="RL.matchReturn('${p.id}')"><i class="fas fa-people-arrows"></i> Match passenger</button>
+      </div>
+    `).join('');
+  }
+
+  function matchReturn(id) {
+    const p = RETURN_PASSENGERS.find(x => x.id === id);
+    if (!p) return;
+    toast(`Return passenger ${p.name} matched! +${fmt(p.fare)} potential earnings.`, 'success');
+  }
+
+  /* ==========================================================
+     MAP (SIMULATED)
+     ========================================================== */
+  function mountMap(containerId) {
+    const el = document.getElementById(containerId);
+    if (!el || el.dataset.mounted === '1') return;
+    el.dataset.mounted = '1';
+
+    el.innerHTML = `
+      <div class="map-shell">
+        <div class="map-grid"></div>
+        <!-- road lines -->
+        <div class="map-road" style="top:75%; left:5%; width:90%; transform:rotate(-8deg);"></div>
+        <div class="map-road" style="top:45%; left:10%; width:80%; transform:rotate(-25deg);"></div>
+        <div class="map-road" style="top:20%; left:15%; width:70%; transform:rotate(-38deg);"></div>
+
+        <!-- route line -->
+        <svg class="map-route-line" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <path d="M 12 78 Q 35 60 55 42 Q 75 22 88 14" stroke="#e8722a" stroke-width="1.6" fill="none" stroke-dasharray="4 3" stroke-linecap="round"/>
+        </svg>
+
+        <!-- pins -->
+        <div class="map-pin" style="left:12%; top:78%;">
+          <i class="fas fa-circle-dot" style="color:#e8722a;"></i>
+          <span class="lbl">Jamshedpur</span>
+        </div>
+        <div class="map-pin" style="left:55%; top:42%;">
+          <i class="fas fa-user" style="color:#3b7bd6;"></i>
+          <span class="lbl">Pickup · Sakchi</span>
+        </div>
+        <div class="map-pin" style="left:88%; top:14%;">
+          <i class="fas fa-flag-checkered" style="color:#d63b3b;"></i>
+          <span class="lbl">Ranchi</span>
+        </div>
+
+        <!-- car -->
+        <div class="map-car"><i class="fas fa-car-side" style="color:#e8722a;"></i></div>
+
+        <!-- overlay card -->
+        <div class="map-overlay-card">
+          <div class="flex-between mb-1">
+            <span class="status-chip status-live"><span class="dot"></span> Live</span>
+            <span class="text-xs text-muted">ETA 2h 10m</span>
+          </div>
+          <div class="text-sm fw-700">Jamshedpur → Ranchi</div>
+          <div class="text-xs text-soft">140 km remaining · 62 km/h avg</div>
+        </div>
+
+        <div class="map-overlay-card top-right">
+          <div class="text-xs text-muted fw-700">TRIP STATUS</div>
+          <div class="text-sm fw-700" id="${containerId}-status">🟢 Driver is on the way</div>
+        </div>
+      </div>
+      <div class="sim-notice"><i class="fas fa-circle-info"></i> Simulated map. Real GPS tracking requires a map provider (Google Maps / Mapbox / OpenStreetMap) and WebSocket updates.</div>
+    `;
+  }
+
+  const TRIP_STATUS_MAP = {
+    onway: { label: 'Driver is on the way', color: 'success', emoji: '🟢' },
+    arriving: { label: 'Arriving at pickup', color: 'warning', emoji: '🟡' },
+    pickedup: { label: 'Passenger picked up', color: 'info', emoji: '🔵' },
+    approaching: { label: 'Approaching destination', color: 'purple', emoji: '🟣' }
+  };
+
+  function setTripStatus(key, btn) {
+    const s = TRIP_STATUS_MAP[key];
+    if (!s) return;
+    state.tripStatus = key;
+
+    const chip = $('#tripStatusChip');
+    if (chip) {
+      chip.className = 'status-chip ' + (s.color === 'success' ? 'status-live' : 'pill pill-' + s.color);
+      chip.innerHTML = s.color === 'success' ? `<span class="dot"></span> ${s.label}` : s.label;
+    }
+
+    ['homeMapContainer', 'trackingMapContainer'].forEach(id => {
+      const el = document.getElementById(id + '-status');
+      if (el) el.textContent = s.emoji + ' ' + s.label;
+    });
+
+    if (btn) {
+      $$('#view-tracking .btn-outline').forEach(b => b.classList.remove('btn-primary'));
+      btn.classList.add('btn-primary');
+    }
+
+    // Update timeline if booking active
+    renderTimeline(key);
+
+    toast('Trip status: ' + s.label, 'info', 1800);
+  }
+
+  /* ==========================================================
+     BOOKINGS + TIMELINE
+     ========================================================== */
+  function renderBookings() {
+    const grid = $('#bookingsGrid');
+    if (!grid) return;
+    grid.innerHTML = state.bookings.map(b => `
+      <div class="card card-hover">
+        <div class="flex-between mb-2">
+          <span class="pill pill-accent"><i class="fas fa-ticket"></i> #${b.id}</span>
+          <span class="pill ${b.status === 'Completed' ? 'pill-success' : 'pill-info'}">${escapeHtml(b.status)}</span>
+        </div>
+        <h3>${escapeHtml(b.route)}</h3>
+        <div class="ride-detail-grid mt-2">
+          <div class="detail-item"><div class="k">Date</div><div class="v">${escapeHtml(b.date)}</div></div>
+          <div class="detail-item"><div class="k">Time</div><div class="v">${escapeHtml(b.time)}</div></div>
+          <div class="detail-item"><div class="k">Seat</div><div class="v">${b.seat}</div></div>
+          <div class="detail-item"><div class="k">Fare</div><div class="v text-accent fw-800">${fmt(b.fare)}</div></div>
+        </div>
+        <div class="flex gap-sm mt-3 flex-wrap">
+          <button class="btn btn-primary btn-sm" onclick="RL.navigate('tracking')"><i class="fas fa-location-crosshairs"></i> Track</button>
+          <button class="btn btn-outline btn-sm" onclick="RL.toast('Trip details opened (simulated).','info')"><i class="fas fa-eye"></i> Details</button>
+          <button class="btn btn-outline btn-sm" onclick="RL.cancelBooking()"><i class="fas fa-xmark"></i> Cancel</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderTimeline(activeKey) {
+    const tl = $('#bookingTimeline');
+    if (!tl) return;
+
+    const stages = TIMELINE_STAGES.map(s => {
+      if (activeKey) {
+        const idx = TIMELINE_STAGES.findIndex(x => x.key === activeKey);
+        const myIdx = TIMELINE_STAGES.findIndex(x => x.key === s.key);
+        return { ...s, done: myIdx < idx, active: myIdx === idx };
+      }
+      return s;
+    });
+
+    tl.innerHTML = stages.map(s => {
+      const cls = s.done ? 'done' : (s.active ? 'active' : '');
+      const icon = s.done ? '<i class="fas fa-check"></i>' : (s.active ? '<i class="fas fa-circle" style="font-size:0.5rem;"></i>' : '<i class="fas fa-circle" style="font-size:0.5rem;"></i>');
+      return `
+        <div class="tl-item ${cls}">
+          <div class="tl-dot">${icon}</div>
+          <div class="tl-title">${escapeHtml(s.label)}</div>
+          <div class="tl-sub">${escapeHtml(s.sub || '')}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  /* ==========================================================
+     DRIVER DASHBOARD
+     ========================================================== */
+  function driverTab(tab, btn) {
+    state.driverTab = tab;
+    $$('#view-driver .dash-nav-item').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderDriverTab(tab);
+  }
+
+  function renderDriverTab(tab) {
+    const body = $('#driverDashBody');
+    if (!body) return;
+
+    if (tab === 'overview') {
+      body.innerHTML = `
+        <div class="grid grid-3 mb-3">
+          <div class="metric-card">
+            <div class="metric-ico" style="background:var(--accent-soft);color:var(--accent);"><i class="fas fa-route"></i></div>
+            <div class="val" id="metricEarnings">₹3,300</div>
+            <div class="key">Today's earnings</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-ico" style="background:var(--info-soft);color:var(--info);"><i class="fas fa-users"></i></div>
+            <div class="val">3 / 4</div>
+            <div class="key">Passengers today</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-ico" style="background:var(--purple-soft);color:var(--purple);"><i class="fas fa-arrows-rotate"></i></div>
+            <div class="val">2</div>
+            <div class="key">Return requests</div>
+          </div>
+        </div>
+
+        <div class="card card-lg mb-3">
+          <div class="flex-between mb-2 flex-wrap gap-sm">
+            <div>
+              <span class="pill pill-accent"><i class="fas fa-car"></i> Today's trip</span>
+              <h3 class="mt-1">Jamshedpur → Ranchi</h3>
+              <div class="text-sm text-soft">8:00 AM departure · 200 km</div>
+            </div>
+            <span class="pill pill-success"><i class="fas fa-users"></i> 3 / 4 seats filled</span>
+          </div>
+          <div class="ride-detail-grid">
+            <div class="detail-item"><div class="k">Outbound earnings</div><div class="v text-success fw-800">₹3,300</div></div>
+            <div class="detail-item"><div class="k">Return passengers</div><div class="v">2 potential</div></div>
+            <div class="detail-item"><div class="k">Return earnings</div><div class="v text-success fw-800">₹2,200</div></div>
+            <div class="detail-item"><div class="k">Total estimated trip revenue</div><div class="v text-accent fw-800">₹5,500</div></div>
+          </div>
+          <div class="disclaimer mt-2"><i class="fas fa-triangle-exclamation"></i> Estimates only. Actual payout depends on fuel, tolls, taxes, cancellations and platform fees.</div>
+          <div class="grid grid-2 mt-3" style="gap:0.6rem;">
+            <button class="btn btn-primary" onclick="RL.driverTab('active', document.querySelectorAll('#view-driver .dash-nav-item')[2])"><i class="fas fa-circle-play"></i> Start active trip</button>
+            <button class="btn btn-outline" onclick="RL.driverTab('return', document.querySelectorAll('#view-driver .dash-nav-item')[3])"><i class="fas fa-arrows-rotate"></i> Match return passengers</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="mb-2">Passenger requests</h3>
+          ${['Ananya Verma', 'Karan Singh', 'Meera Joshi'].map((n, i) => `
+            <div class="passenger-row">
+              <img class="avatar" style="width:40px;height:40px;" src="https://i.pravatar.cc/80?img=${10 + i * 7}" alt="${n}">
+              <div class="flex-1">
+                <div class="fw-600">${n}</div>
+                <div class="text-xs text-muted">Pickup: ${i === 0 ? 'Sakchi' : i === 1 ? 'Bistupur' : 'Mango'} · 1 seat</div>
+              </div>
+              <div class="flex gap-sm">
+                <button class="btn btn-ghost btn-sm" onclick="RL.acceptPassenger('${n}')"><i class="fas fa-check"></i></button>
+                <button class="btn btn-outline btn-sm" onclick="RL.toast('Request declined.','warning')"><i class="fas fa-xmark"></i></button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    } else if (tab === 'trips') {
+      body.innerHTML = `
+        <div class="card card-lg mb-3">
+          <h3 class="mb-2">Upcoming trips</h3>
+          <div class="ride-card" style="border-left:4px solid var(--accent);">
+            <div class="flex-between flex-wrap gap-sm">
+              <div>
+                <h4>Jamshedpur → Ranchi</h4>
+                <div class="text-sm text-soft">21 Sep · 8:00 AM · 3 / 4 seats</div>
+              </div>
+              <span class="pill pill-success">₹3,300</span>
+            </div>
+            <div class="flex gap-sm mt-2 flex-wrap">
+              <button class="btn btn-primary btn-sm" onclick="RL.navigate('tracking')"><i class="fas fa-circle-play"></i> Start</button>
+              <button class="btn btn-outline btn-sm" onclick="RL.toast('Trip details (simulated).','info')"><i class="fas fa-eye"></i> Details</button>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (tab === 'active') {
+      body.innerHTML = `
+        <div class="card card-lg">
+          <span class="pill pill-success"><span class="dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;"></span> Trip in progress</span>
+          <h3 class="mt-2">Jamshedpur → Ranchi</h3>
+          <p class="text-sm text-soft">3 passengers on board · ETA 11:20 AM</p>
+          <div id="driverActiveMap" class="mt-3"></div>
+          <div class="grid grid-2 mt-3" style="gap:0.6rem;">
+            <button class="btn btn-primary" onclick="RL.setTripStatus('approaching', this)"><i class="fas fa-flag-checkered"></i> Approaching destination</button>
+            <button class="btn btn-outline" onclick="RL.navigate('tracking')"><i class="fas fa-location-crosshairs"></i> Open tracker</button>
+          </div>
+        </div>
+      `;
+      setTimeout(() => mountMap('driverActiveMap'), 50);
+    } else if (tab === 'return') {
+      body.innerHTML = `
+        <div class="card card-lg mb-3">
+          <h3 class="mb-1">Return match · Ranchi → Jamshedpur</h3>
+          <p class="text-sm text-soft mb-2">3 passengers are looking for a ride on your return route.</p>
+          <div class="grid grid-3" id="driverReturnList"></div>
+        </div>
+      `;
+      const list = $('#driverReturnList');
+      list.innerHTML = RETURN_PASSENGERS.map(p => `
+        <div class="card card-hover">
+          <div class="flex gap-sm items-center mb-2">
+            <img class="avatar" style="width:40px;height:40px;" src="${p.avatar}" alt="${p.name}">
+            <div><h4>${p.name}</h4><div class="text-xs text-muted">${p.compat}% compatible</div></div>
+          </div>
+          <div class="text-sm mb-1">${escapeHtml(p.pickup)} → ${escapeHtml(p.drop)}</div>
+          <div class="flex gap-sm flex-wrap mb-2">
+            <span class="pill pill-info">${p.time}</span>
+            <span class="pill pill-success">${fmt(p.fare)}</span>
+          </div>
+          <button class="btn btn-ghost btn-sm btn-block" onclick="RL.matchReturn('${p.id}')"><i class="fas fa-people-arrows"></i> Match</button>
+        </div>
+      `).join('');
+    } else if (tab === 'earnings') {
+      body.innerHTML = `
+        <div class="grid grid-2 mb-3">
+          <div class="metric-card">
+            <div class="metric-ico" style="background:var(--success-soft);color:var(--success);"><i class="fas fa-indian-rupee-sign"></i></div>
+            <div class="val">₹5,500</div>
+            <div class="key">Estimated total trip revenue</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-ico" style="background:var(--accent-soft);color:var(--accent);"><i class="fas fa-wallet"></i></div>
+            <div class="val">₹2,700</div>
+            <div class="key">Estimated driver payout</div>
+          </div>
+        </div>
+        <div class="card card-lg">
+          <h3 class="mb-2">Earnings breakdown</h3>
+          <div class="price-row"><span>Passenger contributions</span><span class="fw-700">₹3,000</span></div>
+          <div class="price-row"><span>Platform fee</span><span class="fw-700">−₹300</span></div>
+          <div class="price-row total"><span>Estimated driver payout</span><span class="text-success">₹2,700</span></div>
+          <div class="disclaimer mt-2"><i class="fas fa-triangle-exclamation"></i> Estimates only. Actual payout accounts for fuel, tolls, taxes and other applicable costs.</div>
+        </div>
+      `;
+    } else if (tab === 'requests') {
+      body.innerHTML = `
+        <div class="card card-lg">
+          <h3 class="mb-2">Passenger requests</h3>
+          ${['Ananya Verma', 'Karan Singh', 'Meera Joshi', 'Dev Patel'].map((n, i) => `
+            <div class="passenger-row">
+              <img class="avatar" style="width:40px;height:40px;" src="https://i.pravatar.cc/80?img=${15 + i * 5}" alt="${n}">
+              <div class="flex-1">
+                <div class="fw-600">${n}</div>
+                <div class="text-xs text-muted">Pickup: ${['Sakchi', 'Bistupur', 'Mango', 'Adityapur'][i]} · 1 seat</div>
+              </div>
+              <div class="flex gap-sm">
+                <button class="btn btn-ghost btn-sm" onclick="RL.acceptPassenger('${n}')"><i class="fas fa-check"></i> Accept</button>
+                <button class="btn btn-outline btn-sm" onclick="RL.toast('Request declined.','warning')"><i class="fas fa-xmark"></i></button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    } else if (tab === 'ratings') {
+      body.innerHTML = `
+        <div class="card card-lg text-center">
+          <div style="font-size:3rem;font-weight:800;color:var(--accent);letter-spacing:-0.03em;">4.9</div>
+          <div class="mb-2">${stars(4.9)}</div>
+          <p class="text-sm text-soft">Based on 412 completed trips</p>
+          <div class="grid grid-3 mt-3">
+            <div class="stat-box"><div class="val">98%</div><div class="key">Punctuality</div></div>
+            <div class="stat-box"><div class="val">96%</div><div class="key">Cleanliness</div></div>
+            <div class="stat-box"><div class="val">99%</div><div class="key">Safety</div></div>
+          </div>
+        </div>
+      `;
+    } else if (tab === 'vehicle') {
+      body.innerHTML = `
+        <div class="card card-lg">
+          <h3 class="mb-2">Vehicle</h3>
+          <div class="ride-head">
+            <div style="font-size:3rem;">🚙</div>
+            <div>
+              <h4>Maruti Suzuki Ertiga</h4>
+              <div class="text-sm text-soft">White · 7 seats · Diesel · Manual</div>
+              <div class="text-xs text-muted">JH 05 •• 4821</div>
+            </div>
+          </div>
+          <div class="grid grid-3 mt-3">
+            <div class="stat-box"><div class="val">Active</div><div class="key">Status</div></div>
+            <div class="stat-box"><div class="val">Valid</div><div class="key">Insurance</div></div>
+            <div class="stat-box"><div class="val">Dec 2026</div><div class="key">Fitness</div></div>
+          </div>
+        </div>
+      `;
+    } else if (tab === 'documents') {
+      body.innerHTML = `
+        <div class="card card-lg">
+          <h3 class="mb-2">Documents</h3>
+          ${['Driving License', 'Vehicle RC', 'Insurance', 'Fitness Certificate', 'Permit'].map(d => `
+            <div class="flex-between" style="padding:0.7rem 0;border-bottom:1px solid var(--border);">
+              <span class="text-sm fw-600">${d}</span>
+              <span class="verified-badge"><i class="fas fa-check"></i> Verified</span>
+            </div>
+          `).join('')}
+          <p class="text-xs text-muted mt-2">Full document numbers are stored securely and never exposed publicly.</p>
+        </div>
+      `;
+    } else if (tab === 'verification') {
+      body.innerHTML = `
+        <div class="card card-lg text-center">
+          <div class="verified-badge" style="font-size:1rem;padding:0.6rem 1.2rem;"><i class="fas fa-circle-check"></i> Identity Verified</div>
+          <h3 class="mt-2">Rahul Sharma</h3>
+          <p class="text-sm text-soft">All checks passed</p>
+          <div class="grid grid-2 mt-3" style="gap:0.6rem;text-align:left;">
+            ${['Government ID', 'Driving License', 'Vehicle Documents', 'Phone', 'Email', 'Profile Photo'].map(x => `
+              <div class="flex-between card" style="padding:0.8rem 1rem;">
+                <span class="text-sm">${x}</span>
+                <span class="verified-badge"><i class="fas fa-check"></i> Verified</span>
+              </div>
+            `).join('')}
+          </div>
+          <div class="mt-3 text-sm text-soft"><i class="fas fa-phone"></i> Emergency contact on file</div>
+        </div>
+      `;
+    }
+  }
+
+  function acceptPassenger(name) {
+    toast(`Passenger ${name} accepted.`, 'success');
+  }
+
+  /* ==========================================================
+     CAR RENTAL
+     ========================================================== */
+  function renderRentalCategories() {
+    const el = $('#rentalCategories');
+    if (!el) return;
+    el.innerHTML = RENTAL_CATEGORIES.map(c => `
+      <button class="cat-chip ${c.key === state.rentalCategory ? 'active' : ''}" onclick="RL.setRentalCategory('${c.key}', this)">
+        <i class="fas ${c.icon}"></i> ${c.label}
+      </button>
+    `).join('');
+  }
+
+  function setRentalCategory(key, btn) {
+    state.rentalCategory = key;
+    $$('#rentalCategories .cat-chip').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderRentalGrid();
+  }
+
+  function renderRentalGrid() {
+    const grid = $('#rentalGrid');
+    if (!grid) return;
+    const list = state.rentalCategory === 'all' ? RENTALS : RENTALS.filter(r => r.category === state.rentalCategory);
+
+    grid.innerHTML = list.map(c => `
+      <div class="car-card">
+        <div class="car-img">
+          <img src="${c.img}" alt="${escapeHtml(c.name)}" onerror="this.parentElement.innerHTML='<span style=\\'font-size:4rem;\\'>${c.icon}</span>'">
+        </div>
+        <div class="car-body">
+          <div class="flex-between">
+            <h3>${escapeHtml(c.name)}</h3>
+            <span class="pill ${c.available ? 'pill-success' : 'pill-danger'}">${c.available ? 'Available' : 'Booked'}</span>
+          </div>
+          <div class="flex gap-sm mt-1">
+            <span class="pill pill-warning"><i class="fas fa-star"></i> ${c.rating}</span>
+            <span class="pill pill-neutral">${c.seats} seats</span>
+          </div>
+          <div class="car-specs">
+            <span class="car-spec"><i class="fas fa-gas-pump"></i> ${c.fuel}</span>
+            <span class="car-spec"><i class="fas fa-gear"></i> ${c.trans}</span>
+            <span class="car-spec"><i class="fas fa-user-group"></i> ${c.seats}</span>
+          </div>
+          <div class="flex-between mt-2">
+            <div>
+              <div class="fw-800 text-accent" style="font-size:1.3rem;">${fmt(c.price)}<span class="text-xs text-muted" style="font-weight:500;">/day</span></div>
+              <div class="text-xs text-muted">Deposit ${fmt(c.deposit)}</div>
+            </div>
+          </div>
+          <div class="grid grid-2 mt-3" style="gap:0.5rem;">
+            <button class="btn btn-primary btn-sm" onclick="RL.rentNow('${c.id}')" ${!c.available ? 'disabled' : ''}><i class="fas fa-key"></i> Rent Now</button>
+            <button class="btn btn-outline btn-sm" onclick="RL.viewVehicle('${c.id}')"><i class="fas fa-eye"></i> Details</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderHomeRentalTeaser() {
+    const el = $('#homeRentalGrid');
+    if (!el) return;
+    el.innerHTML = RENTALS.slice(0, 4).map(c => `
+      <div class="car-card">
+        <div class="car-img" style="height:120px;">
+          <img src="${c.img}" alt="${escapeHtml(c.name)}" onerror="this.parentElement.innerHTML='<span style=\\'font-size:2.6rem;\\'>${c.icon}</span>'">
+        </div>
+        <div class="car-body">
+          <h4>${escapeHtml(c.name)}</h4>
+          <div class="text-xs text-muted mb-1">${c.seats} seats · ${c.fuel} · ${c.trans}</div>
+          <div class="flex-between">
+            <span class="fw-800 text-accent">${fmt(c.price)}<span class="text-xs text-muted" style="font-weight:500;">/day</span></span>
+            <button class="btn btn-ghost btn-sm" onclick="RL.rentNow('${c.id}')">Rent</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function rentNow(id) {
+    const c = RENTALS.find(x => x.id === id);
+    if (!c) return;
+    if (!c.available) { toast('This vehicle is currently booked.', 'danger'); return; }
+    openModal(`
+      <div class="modal-head">
+        <div>
+          <span class="pill pill-accent"><i class="fas fa-key"></i> Rent a car</span>
+          <h2 class="mt-1">${escapeHtml(c.name)}</h2>
+        </div>
+        <button class="modal-close" onclick="RL.closeModal()"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="car-img" style="height:160px;border-radius:var(--radius);overflow:hidden;margin-bottom:1rem;">
+        <img src="${c.img}" alt="${escapeHtml(c.name)}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<span style=\\'font-size:3.5rem;\\'>${c.icon}</span>'">
+      </div>
+      <div class="ride-detail-grid mb-3">
+        <div class="detail-item"><div class="k">Seats</div><div class="v">${c.seats}</div></div>
+        <div class="detail-item"><div class="k">Fuel</div><div class="v">${c.fuel}</div></div>
+        <div class="detail-item"><div class="k">Transmission</div><div class="v">${c.trans}</div></div>
+        <div class="detail-item"><div class="k">Rating</div><div class="v">${c.rating} ★</div></div>
+      </div>
+      <div class="price-row"><span>Daily rate</span><span class="fw-700">${fmt(c.price)}</span></div>
+      <div class="price-row"><span>Security deposit (refundable)</span><span class="fw-700">${fmt(c.deposit)}</span></div>
+      <div class="price-row total"><span>Pay now</span><span class="text-accent">${fmt(c.price + c.deposit)}</span></div>
+      <div class="grid grid-2 mt-3" style="gap:0.6rem;">
+        <button class="btn btn-outline" onclick="RL.closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="RL.confirmRental('${c.id}')"><i class="fas fa-circle-check"></i> Confirm rental</button>
+      </div>
+      <p class="text-xs text-muted mt-2">Payment integration (Razorpay / Stripe) would be added in a production build.</p>
+    `);
+  }
+
+  function confirmRental(id) {
+    const c = RENTALS.find(x => x.id === id);
+    c.available = false;
+    closeModal();
+    renderRentalGrid();
+    toast(`${c.name} booked! Pickup instructions sent.`, 'success');
+  }
+
+  function viewVehicle(id) {
+    const c = RENTALS.find(x => x.id === id);
+    if (!c) return;
+    openModal(`
+      <div class="modal-head">
+        <h2>${escapeHtml(c.name)}</h2>
+        <button class="modal-close" onclick="RL.closeModal()"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="car-img" style="height:180px;border-radius:var(--radius);overflow:hidden;margin-bottom:1rem;">
+        <img src="${c.img}" alt="${escapeHtml(c.name)}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<span style=\\'font-size:3.5rem;\\'>${c.icon}</span>'">
+      </div>
+      <div class="grid grid-2 mb-2">
+        <div class="stat-box"><div class="val">${c.seats}</div><div class="key">Seats</div></div>
+        <div class="stat-box"><div class="val">${c.fuel}</div><div class="key">Fuel</div></div>
+        <div class="stat-box"><div class="val">${c.trans}</div><div class="key">Transmission</div></div>
+        <div class="stat-box"><div class="val">${c.rating} ★</div><div class="key">Rating</div></div>
+      </div>
+      <div class="price-row"><span>Price / day</span><span class="fw-700">${fmt(c.price)}</span></div>
+      <div class="price-row"><span>Security deposit</span><span class="fw-700">${fmt(c.deposit)}</span></div>
+      <div class="price-row total"><span>Total</span><span class="text-accent">${fmt(c.price + c.deposit)}</span></div>
+      <button class="btn btn-primary btn-block mt-3" onclick="RL.closeModal(); RL.rentNow('${c.id}')" ${!c.available ? 'disabled' : ''}><i class="fas fa-key"></i> Rent Now</button>
+    `);
+  }
+
+  /* ==========================================================
+     AUTH
+     ========================================================== */
+  function openAuth() { navigate('auth'); }
+  function authTab(mode) {
+    state.authMode = mode;
+    $('#tabLogin').classList.toggle('active', mode === 'login');
+    $('#tabRegister').classList.toggle('active', mode === 'register');
+    $('#authTitle').textContent = mode === 'login' ? 'Welcome back' : 'Create account';
+    $('#authSubmit').textContent = mode === 'login' ? 'Login' : 'Register';
+    $('#nameField').style.display = mode === 'register' ? 'flex' : 'none';
+  }
+
+  function handleAuth(e) {
+    e.preventDefault();
+    const email = $('#authEmail').value.trim();
+    const pass = $('#authPass').value;
+    let ok = true;
+
+    $('#emailError').classList.remove('show');
+    $('#passError').classList.remove('show');
+    $('#authEmail').classList.remove('input-error');
+    $('#authPass').classList.remove('input-error');
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      $('#emailError').classList.add('show');
+      $('#authEmail').classList.add('input-error');
+      ok = false;
+    }
+    if (pass.length < 6) {
+      $('#passError').classList.add('show');
+      $('#authPass').classList.add('input-error');
+      ok = false;
+    }
+    if (!ok) return false;
+
+    toast(state.authMode === 'login' ? 'Logged in successfully (simulated).' : 'Account created (simulated).', 'success');
+    navigate('home');
+    return false;
+  }
+
+  /* ==========================================================
+     MODAL
+     ========================================================== */
+  function openModal(html, large) {
+    const overlay = $('#modalOverlay');
+    const body = $('#modalBody');
+    body.className = 'modal' + (large ? ' modal-lg' : '');
+    body.innerHTML = html;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    $('#modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* ==========================================================
+     SOS
+     ========================================================== */
+  function triggerSOS() {
+    openModal(`
+      <div class="modal-head">
+        <div>
+          <span class="pill pill-danger"><i class="fas fa-triangle-exclamation"></i> Emergency</span>
+          <h2 class="mt-1">SOS Activated</h2>
+        </div>
+        <button class="modal-close" onclick="RL.closeModal()"><i class="fas fa-xmark"></i></button>
+      </div>
+      <div class="sos-btn" style="animation:none;cursor:default;margin-bottom:1rem;">
+        <i class="fas fa-triangle-exclamation"></i> Help is on the way
+      </div>
+      <p class="text-sm mb-2">In a real deployment this would:</p>
+      <ul class="text-sm" style="padding-left:1.2rem;display:flex;flex-direction:column;gap:0.4rem;">
+        <li>Alert your emergency contacts with your live location</li>
+        <li>Notify RideLoop's 24×7 safety team</li>
+        <li>Optionally contact local emergency services</li>
+        <li>Record the trip status and last known GPS coordinates</li>
+      </ul>
+      <p class="text-xs text-muted mt-3"><i class="fas fa-circle-info"></i> SOS, live location and identity verification require backend services and explicit user permissions in production.</p>
+      <button class="btn btn-outline btn-block mt-3" onclick="RL.closeModal()">Close</button>
+    `);
+  }
+
+  /* ==========================================================
+     ANIMATED COUNTERS (hero stats)
+     ========================================================== */
+  function animateCounters() {
+    $$('.hero-stat .num').forEach(el => {
+      const target = parseInt(el.dataset.count, 10);
+      if (isNaN(target)) return;
+      let cur = 0;
+      const step = Math.max(1, Math.floor(target / 60));
+      const timer = setInterval(() => {
+        cur += step;
+        if (cur >= target) { cur = target; clearInterval(timer); }
+        el.textContent = cur.toLocaleString('en-IN') + (target >= 1000 ? '+' : '');
+      }, 20);
+    });
+  }
+
+  /* ==========================================================
+     INIT
+     ========================================================== */
+  function init() {
+    initTheme();
+    renderRides();
+    renderReturnPassengers();
+    renderRentalCategories();
+    renderRentalGrid();
+    renderHomeRentalTeaser();
+    renderBookings();
+    renderTimeline();
+    mountMap('homeMapContainer');
+    animateCounters();
+
+    // set default dates
+    const today = todayISO();
+    ['hs-date', 'f-date'].forEach(id => { const el = $('#' + id); if (el) el.value = today; });
+
+    // Search tabs on home
+    $$('.search-tab[data-tab]').forEach(tab => {
+      tab.addEventListener('click', () => {
+        $$('.search-tab[data-tab]').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        if (tab.dataset.tab === 'rental') navigate('rental');
+      });
+    });
+
+    // Theme toggle
+    $('#themeToggle').addEventListener('click', toggleTheme);
+
+    // Notifications
+    $('#notifBtn').addEventListener('click', () => {
+      toast('You have 3 new trip updates.', 'info');
+    });
+
+    // Click outside modal to close
+    $('#modalOverlay').addEventListener('click', (e) => {
+      if (e.target.id === 'modalOverlay') closeModal();
+    });
+
+    // Keyboard escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Hash routing (basic)
+    if (location.hash) {
+      const v = location.hash.replace('#', '');
+      if (VIEW_IDS.includes(v)) navigate(v);
+    }
+
+    toast('Welcome to RideLoop — your journey, shared, smarter.', 'success', 3800);
+  }
+
+  // Public API
+  return {
+    state,
+    navigate, toast, toggleTheme, handleSearch, resetFilters, swapCities, applySort,
+    viewRide, bookSeat, cancelBooking, confirmCancel,
+    matchReturn, setTripStatus, mountMap,
+    driverTab, acceptPassenger,
+    renderRentalCategories, setRentalCategory, rentNow, confirmRental, viewVehicle,
+    openAuth, authTab, handleAuth,
+    openModal, closeModal, triggerSOS,
+    init
+  };
+})();
+
+// Boot
+document.addEventListener('DOMContentLoaded', RL.init);
+
+/* ============================================================
+   FUTURE BACKEND ARCHITECTURE
+   ============================================================
+   This prototype is frontend-only. In a production RideLoop build:
+
+   FRONTEND
+     - HTML + CSS + Vanilla JS (this prototype)
+     - Scale to React / Next.js with the same view structure.
+
+   BACKEND
+     - Node.js + Express REST API
+     - Endpoints:
+         POST /api/auth/register | /login
+         GET  /api/trips/search?from=&to=&date=&seats=
+         GET  /api/trips/:id
+         POST /api/trips            (driver creates trip)
+         POST /api/bookings         (passenger books a seat)
+         GET  /api/bookings/:id
+         GET  /api/matching/return  (return-trip passenger matching)
+         GET  /api/tracking/:tripId (real-time status)
+         POST /api/payments/create-intent
+         POST /api/sos
+     - Controllers handle validation, pricing, matching, payouts.
+
+   DATABASE (MongoDB — Mongoose)
+     Collections:
+       Users            { _id, name, email, passwordHash, role, phone, verified, rating }
+       Drivers          { userId, licenseNo, vehicleIds, documents, emergencyContact }
+       Passengers       { userId, preferences, bookingHistory }
+       Vehicles         { ownerId, model, plateMasked, seats, fuel, transmission, docs }
+       Trips            { tripId, driverId, origin, destination, route, departureTime,
+                          availableSeats, passengers[], pricePerSeat, returnTrip, status }
+       Bookings         { bookingId, tripId, passengerId, seat, fare, status, timeline }
+       Payments         { paymentId, bookingId, amount, method, status, payout }
+       Ratings          { fromUserId, toUserId, tripId, score, comment }
+       Documents        { userId, type, provider, verifiedAt }   // KYC metadata only
+       EmergencyContacts{ userId, name, phone, relation }
+       Notifications    { userId, type, payload, read }
+     Indexes on origin+destination+departureTime for fast search.
+
+   AUTHENTICATION
+     - JWT access/refresh tokens, or OAuth (Google / Apple).
+     - Passwords hashed with bcrypt/argon2.
+     - Role-based access (passenger / driver / admin).
+
+   MAPS
+     - Google Maps Platform, Mapbox, or OpenStreetMap + Leaflet.
+     - Geocoding, distance matrix, route polyline, ETA.
+     - The simulated map component can be swapped 1:1 with a real map instance.
+
+   PAYMENTS
+     - Razorpay (India) or Stripe (global) for collections and payouts.
+     - Escrow / hold until trip completion, then driver payout.
+
+   REAL-TIME TRACKING
+     - WebSockets (Socket.IO) or MQTT for driver location updates.
+     - Channel: trip:{tripId} broadcasting lat/lng/eta/status.
+
+   NOTIFICATIONS
+     - Firebase Cloud Messaging for push; Twilio for SMS; SendGrid for email.
+
+   IDENTITY VERIFICATION
+     - Compliant KYC provider (e.g. DigiLocker, Stripe Identity, Onfido).
+     - Store verification status only — never full document numbers.
+   ============================================================ */
+</script>
+</body>
+</html>
